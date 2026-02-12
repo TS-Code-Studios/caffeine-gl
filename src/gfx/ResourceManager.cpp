@@ -1,10 +1,9 @@
-#include "ResourceManager.h"
-
 #include <iostream>
 #include <sstream>
 #include <fstream>
 
-#include "stb_image.h"
+#include <caffeine-gl/gfx/ResourceManager.h>
+#include <caffeine-gl/gfx/stb_image.h>
 
 std::map<std::string, Texture> ResourceManager::Textures;
 std::map<std::string, Shader> ResourceManager::Shaders;

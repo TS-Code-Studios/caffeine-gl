@@ -1,4 +1,4 @@
-#include "Texture.h"
+#include "../../include/caffeine-gl/gfx/Texture.h"
 
 #include <glad/glad.h>
 

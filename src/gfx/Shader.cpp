@@ -1,4 +1,4 @@
-#include "Shader.h"
+#include "../../include/caffeine-gl/gfx/Shader.h"
 
 #include <iostream>
 
