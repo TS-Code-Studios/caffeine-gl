@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(OpenGL_GL_PREFERENCE GLVND)
 
 add_subdirectory(external/glfw)
+add_subdirectory(external/glm)
 
 find_package(OpenGL REQUIRED)
 
