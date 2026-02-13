@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(OpenGL_GL_PREFERENCE GLVND)
 
-add_subdirectory(glfw)
+add_subdirectory(external/glfw)
 
 find_package(OpenGL REQUIRED)
 
@@ -41,7 +41,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
     # For Windows cross-compiling with MinGW-w64
     target_link_libraries(${PROJECT_NAME} PUBLIC
-            ${CMAKE_CURRENT_SOURCE_DIR}/lib/windows/libglfw3.a
+            glfw
             opengl32
     )
 else()
@@ -49,7 +49,7 @@ else()
     target_link_libraries(${PROJECT_NAME} PUBLIC
             z
             minizip
-            ${CMAKE_CURRENT_SOURCE_DIR}/lib/linux/libglfw3.a
+            glfw
             OpenGL::GL
             dl
             pthread
