@@ -5,6 +5,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(OpenGL_GL_PREFERENCE GLVND)
 
+add_subdirectory(glfw)
+
 find_package(OpenGL REQUIRED)
 
 add_library(${PROJECT_NAME} STATIC
