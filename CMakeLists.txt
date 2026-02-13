@@ -48,15 +48,15 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
 else()
     # Native Linux build
     target_link_libraries(${PROJECT_NAME} PUBLIC
-            z
-            minizip
+            #z
+            #minizip
             glfw
             OpenGL::GL
-            dl
-            pthread
-            wayland-client
-            wayland-cursor
-            wayland-egl
-            xkbcommon
+            #dl
+            #pthread
+            #wayland-client
+            #wayland-cursor
+            #wayland-egl
+            #xkbcommon
     )
 endif()
