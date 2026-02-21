@@ -2,26 +2,28 @@
 #define GAMEOBJECT_H
 
 #include <glad/glad.h>
-#include <glm/glm.hpp>
 
-#include "../gfx/Texture.h"
-#include "../gfx/SpriteRenderer.h"
+#include "caffeine-gl/game/Transform.h"
+
+#include "caffeine-gl/gfx/Texture.h"
+#include "caffeine-gl/gfx/SpriteRenderer.h"
 
 
 class GameObject {
 public:
 	virtual ~GameObject() = default;
 
-	glm::vec2 position, size, velocity;
+	Transform transform;
+
+	glm::vec2 velocity;
 	glm::vec3 color;
-	float rotation;
 	bool isSolid;
 	bool destroyed;
 
 	Texture Sprite;
 
 	GameObject();
-	GameObject(glm::vec2 pos, glm::vec2 size, Texture sprite, glm::vec3 color = glm::vec3(1.0f), glm::vec2 velocity = glm::vec2(0.0f, 0.0f));
+	GameObject(glm::vec2 position, float rotation, glm::vec2 scale, Texture sprite, glm::vec3 color = glm::vec3(1.0f), glm::vec2 velocity = glm::vec2(0.0f, 0.0f));
 
 	virtual void Draw(SpriteRenderer &renderer);
 };

@@ -7,6 +7,8 @@ set(OpenGL_GL_PREFERENCE GLVND)
 
 add_subdirectory(external/glfw)
 add_subdirectory(external/glm)
+add_subdirectory(external/box2d)
+
 
 find_package(OpenGL REQUIRED)
 
@@ -33,6 +35,12 @@ add_library(${PROJECT_NAME} STATIC
         include/caffeine-gl/gfx/ParticleGenerator.h
 
         src/gfx/stb.cpp
+        include/caffeine-gl/game/Transform.h
+        include/caffeine-gl/game/Hitbox.h
+)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE
+        box2d
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
@@ -48,15 +56,7 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
 else()
     # Native Linux build
     target_link_libraries(${PROJECT_NAME} PUBLIC
-            #z
-            #minizip
             glfw
             OpenGL::GL
-            #dl
-            #pthread
-            #wayland-client
-            #wayland-cursor
-            #wayland-egl
-            #xkbcommon
     )
 endif()
