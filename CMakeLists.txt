@@ -40,6 +40,7 @@ add_library(${PROJECT_NAME} STATIC
         include/caffeine-gl/gfx/ParticleGenerator.h
 
         src/gfx/stb.cpp
+        include/caffeine-gl/base.h
 )
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
