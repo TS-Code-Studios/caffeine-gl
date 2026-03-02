@@ -3,13 +3,15 @@
 
 #include <iostream>
 
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 class CaffeineWindow {
 public:
 	int WIDTH, HEIGHT;
 	bool keys[1024], processedKeys[1024];
-	bool shouldClose;
+
+	GLFWwindow* window;
 
 	GLFWmonitor* primaryMonitor;
 	const GLFWvidmode *videoMode;
@@ -22,8 +24,6 @@ public:
 
 private:
 	void initGLFW();
-
-	GLFWwindow* window;
 };
 
 #endif //CAFFEINEWINDOW_H

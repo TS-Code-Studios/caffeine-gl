@@ -1,5 +1,4 @@
 #include <caffeine-gl/ui/CaffeineWindow.h>
-#include <glad/glad.h>
 
 void errorCallback(int error_code, const char* description);
 void framebufferSizeCallback(GLFWwindow* window, int width, int height);
@@ -36,7 +35,7 @@ void CaffeineWindow::initGLFW() {
 	// Set GLFW AA samples to 4
 	glfwWindowHint(GLFW_SAMPLES, 4);
 
-	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -88,12 +87,11 @@ void framebufferSizeCallback(GLFWwindow* window, const int width, const int heig
 
 // Temporary solution, rework to make more customizable once Flappy Bird is done
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode) {
-	if(auto* thisWindow = static_cast<CaffeineWindow*>(glfwGetWindowUserPointer(window))) {
-		if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-			glfwSetWindowShouldClose(window, true);
-			thisWindow->shouldClose = true;
-		}
+	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
+		glfwSetWindowShouldClose(window, true);
+	}
 
+	if(auto* thisWindow = static_cast<CaffeineWindow*>(glfwGetWindowUserPointer(window))) {
 		if (key < 0 || key >= 1024) {
 			return;
 		}
