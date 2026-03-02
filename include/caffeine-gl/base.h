@@ -1,6 +1,8 @@
 #ifndef BASE_H
 #define BASE_H
 
+#include <caffeine-gl/ui/CaffeineWindow.h>
+
 #include <caffeine-gl/game/Game.h>
 #include <caffeine-gl/game/GameObject.h>
 

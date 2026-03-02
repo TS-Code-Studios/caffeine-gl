@@ -6,7 +6,6 @@ option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-#set(GLFW_BUILD_WAYLAND OFF CACHE BOOL "" FORCE)
 
 add_subdirectory(external/glfw)
 add_subdirectory(external/glm)
@@ -18,9 +17,10 @@ endif()
 find_package(OpenGL REQUIRED)
 
 add_library(${PROJECT_NAME} STATIC
-        src/glad.c
+        include/caffeine-gl/base.h
 
         include/caffeine-gl/game/Game.h
+
         src/game/GameLevel.cpp
         include/caffeine-gl/game/GameLevel.h
         src/game/GameObject.cpp
@@ -39,8 +39,11 @@ add_library(${PROJECT_NAME} STATIC
         src/gfx/ParticleGenerator.cpp
         include/caffeine-gl/gfx/ParticleGenerator.h
 
+        include/caffeine-gl/ui/CaffeineWindow.h
+        src/ui/CaffeineWindow.cpp
+
+        src/glad.c
         src/gfx/stb.cpp
-        include/caffeine-gl/base.h
 )
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
