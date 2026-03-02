@@ -1,4 +1,4 @@
-#include "../../include/caffeine-gl/game/BallClass.h"
+#include <caffeine-gl/game/BallClass.h>
 
 
 BallClass::BallClass(): GameObject(), radius(12.5f), stuck(true) { }

@@ -1,4 +1,4 @@
-#include "../../include/caffeine-gl/gfx/ParticleGenerator.h"
+#include <caffeine-gl/gfx/ParticleGenerator.h>
 #include <random>
 #include <iostream>
 

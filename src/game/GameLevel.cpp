@@ -1,4 +1,4 @@
-#include "../include/caffeine-gl/game/GameLevel.h"
+#include <caffeine-gl/game/GameLevel.h>
 
 #include <fstream>
 #include <sstream>

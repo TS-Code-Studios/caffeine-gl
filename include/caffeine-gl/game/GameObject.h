@@ -1,11 +1,10 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
-#include <glad/glad.h>
 #include <glm/glm.hpp>
 
-#include "../gfx/Texture.h"
-#include "../gfx/SpriteRenderer.h"
+#include <caffeine-gl/gfx/Texture.h>
+#include <caffeine-gl/gfx/SpriteRenderer.h>
 
 
 class GameObject {
