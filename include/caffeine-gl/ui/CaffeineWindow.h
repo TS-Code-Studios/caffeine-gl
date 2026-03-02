@@ -9,6 +9,7 @@ class CaffeineWindow {
 public:
 	int WIDTH, HEIGHT;
 	bool keys[1024], processedKeys[1024];
+	bool shouldClose;
 
 	GLFWmonitor* primaryMonitor;
 	const GLFWvidmode *videoMode;
