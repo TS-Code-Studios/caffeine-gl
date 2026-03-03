@@ -1,24 +1,8 @@
 #include <caffeine-gl/ui/CaffeineWindow.h>
 
-void errorCallback(int error_code, const char* description);
-void framebufferSizeCallback(GLFWwindow* window, int width, int height);
-void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
 
-CaffeineWindow::CaffeineWindow() {
-	this->initGLFW();
-
-	// Set all keys to false
-	std::fill(std::begin(this->keys), std::end(this->keys), false);
-	std::fill(std::begin(this->processedKeys), std::end(this->processedKeys), false);
-}
-
-CaffeineWindow::~CaffeineWindow() {
-	glfwDestroyWindow(window);
-	glfwTerminate();
-}
-
-
-void CaffeineWindow::initGLFW() {
+CaffeineWindow::CaffeineWindow(const char* title) {
+	// GLFW initialization and basic setup
 	glfwSetErrorCallback(errorCallback);
 
 	if(!glfwInit()) {
@@ -32,7 +16,7 @@ void CaffeineWindow::initGLFW() {
 	WIDTH = videoMode->width;
 	HEIGHT = videoMode->height;
 
-	// Set GLFW AA samples to 4
+	// Set GLFW Anti-Aliasing samples to 4
 	glfwWindowHint(GLFW_SAMPLES, 4);
 
 	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
@@ -41,7 +25,7 @@ void CaffeineWindow::initGLFW() {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    window = glfwCreateWindow(WIDTH, HEIGHT, "CaffeineGL Window", primaryMonitor, nullptr);
+	window = glfwCreateWindow(WIDTH, HEIGHT, title, primaryMonitor, nullptr);
 
 	if(window == nullptr) {
 		std::cerr << "Failed to create GLFW window" << std::endl;
@@ -57,6 +41,15 @@ void CaffeineWindow::initGLFW() {
 	glfwMakeContextCurrent(window);
 }
 
+CaffeineWindow::~CaffeineWindow() {
+	glfwDestroyWindow(window);
+	delete videoMode;
+
+	glfwTerminate();
+}
+
+
+// Utility functions
 void CaffeineWindow::createViewport() const {
 	if(!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress))) {
 		std::cout << "Failed to initialize GLAD" << std::endl;
@@ -70,10 +63,20 @@ void CaffeineWindow::createViewport() const {
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
+void CaffeineWindow::update() const {
+	glfwSwapBuffers(window);
+	glfwPollEvents();
+}
+
+
+// Configuration functions
 void CaffeineWindow::setWindowTitle(const char* newTitle) const {
 	glfwSetWindowTitle(window, newTitle);
 }
 
+
+
+// GLFW callback functions
 void errorCallback(int error_code, const char* description) {
 	std::cerr << "GLFW Error: " << description << std::endl;
 }
@@ -87,10 +90,6 @@ void framebufferSizeCallback(GLFWwindow* window, const int width, const int heig
 
 // Temporary solution, rework to make more customizable once Flappy Bird is done
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode) {
-	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-		glfwSetWindowShouldClose(window, true);
-	}
-
 	if(auto* thisWindow = static_cast<CaffeineWindow*>(glfwGetWindowUserPointer(window))) {
 		if (key < 0 || key >= 1024) {
 			return;

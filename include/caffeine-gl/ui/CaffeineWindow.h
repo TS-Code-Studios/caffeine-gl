@@ -9,21 +9,29 @@
 class CaffeineWindow {
 public:
 	int WIDTH, HEIGHT;
-	bool keys[1024], processedKeys[1024];
-
-	GLFWwindow* window;
+	bool keys[1024]{}, processedKeys[1024]{};
 
 	GLFWmonitor* primaryMonitor;
 	const GLFWvidmode *videoMode;
 
-	CaffeineWindow();
+
+	explicit CaffeineWindow(const char* title = "Caffeine Window");
 	~CaffeineWindow();
 
+	// Utility functions
 	void createViewport() const;
+	void update() const;
+
+	// Configuration functions
 	void setWindowTitle(const char* newTitle) const;
 
 private:
-	void initGLFW();
+	GLFWwindow* window;
 };
+
+// GLFW callback function forward declarations
+void errorCallback(int error_code, const char* description);
+void framebufferSizeCallback(GLFWwindow* window, int width, int height);
+void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
 
 #endif //CAFFEINEWINDOW_H
