@@ -66,7 +66,6 @@ std::filesystem::path ResourceManager::getResourceRoot() {
     if (resourceRoot.empty()) {
         throw std::runtime_error("Resource root not set. Call ResourceManager::setResourceRoot() before accessing resources.");
     }
-    std::cout << resourceRoot << std::endl;
     return resourceRoot;
 }
 
