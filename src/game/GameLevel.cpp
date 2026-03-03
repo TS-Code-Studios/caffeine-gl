@@ -63,7 +63,7 @@ void GameLevel::init(std::vector<std::vector<unsigned int>> tileData, unsigned i
                 glm::vec2 pos(unit_width * x, unit_height * y);
                 glm::vec2 size(unit_width, unit_height);
 
-                CaffeineGameObject object(pos, size, ResourceManager::GetTexture("block_solid"), glm::vec3(0.8f, 0.8f, 0.7f));
+                CaffeineGameObject object(pos, size, ResourceManager::getTexture("block_solid"), glm::vec3(0.8f, 0.8f, 0.7f));
                 object.isSolid = true;
 
                 this->Bricks.push_back(object);
@@ -82,7 +82,7 @@ void GameLevel::init(std::vector<std::vector<unsigned int>> tileData, unsigned i
                 glm::vec2 pos(unit_width * x, unit_height * y);
                 glm::vec2 size(unit_width, unit_height);
 
-                this->Bricks.emplace_back(pos, size, ResourceManager::GetTexture("block"), color);
+                this->Bricks.emplace_back(pos, size, ResourceManager::getTexture("block"), color);
             }
         }
     }

@@ -1,10 +1,19 @@
 #ifndef RESOURCEMANAGER_H
 #define RESOURCEMANAGER_H
 
+#include <filesystem>
 #include <map>
 #include <string>
 
-#include <glad/glad.h>
+#if defined(_WIN32)
+	#include <windows.h>
+#elif defined(__linux__)
+	#include <unistd.h>
+	#include <limits.h>
+#elif defined(__APPLE__)
+	#include <mach-o/dyld.h>
+#endif
+
 
 #include <caffeine-gl/gfx/Shader.hpp>
 #include <caffeine-gl/gfx/Texture.hpp>
@@ -13,22 +22,32 @@
 
 class ResourceManager {
 public:
-	static std::map<std::string, Shader> Shaders;
-	static std::map<std::string, Texture> Textures;
-	static std::vector<CaffeineGameObject*> GameObjects;
+	static std::filesystem::path getExecutablePath();
+	static void setResourceRoot(const std::filesystem::path& root);
+	static std::filesystem::path getResourceRoot();
 
-	static Shader LoadShader(const char *vertexShaderFile, const char *fragmentShaderFile, const char *geometryShaderFile, const std::string &name);
-	static Shader& GetShader(const std::string& name);
 
-	static Texture LoadTexture(const char *file, bool alpha, const std::string& name);
-	static Texture &GetTexture(const std::string &name);
+	static Shader loadShader(const char *vertexShaderPath, const char *fragmentShaderPath, const char *geometryShaderPath, const std::string &name);
+	static Shader& getShader(const std::string& name);
 
-	static void Clear();
+	static Texture loadTexture(const char *file, bool alpha, const std::string& name);
+	static Texture& getTexture(const std::string &name);
+
+
+	static void clear();
+
 private:
-	ResourceManager() = default;
+	static std::filesystem::path resourceRoot;
+	static std::filesystem::path resolveResourcePath(const std::filesystem::path& relativePath);
 
-	static Shader loadShaderFromFile(const char *vShaderFile, const char *fShaderFile, const char *gShaderFile = nullptr);
 
+	static std::map<std::string, Shader> shaders;
+	static std::map<std::string, Texture> textures;
+	static std::vector<CaffeineGameObject*> gameObjects;
+
+
+	static Shader createShaderProgram(const char *vertexShaderPath, const char *fragmentShaderPath, const char *geometryShaderPath = nullptr);
+	static std::string loadShaderCodeFromFile(const std::filesystem::path& path);
 	static Texture loadTextureFromFile(const char *file, bool alpha);
 };
 
