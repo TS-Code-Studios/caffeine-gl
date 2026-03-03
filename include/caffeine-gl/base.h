@@ -3,7 +3,7 @@
 
 #include <caffeine-gl/ui/CaffeineWindow.h>
 
-#include <caffeine-gl/game/Game.h>
+#include <caffeine-gl/game/CaffeineGame.h>
 #include <caffeine-gl/game/GameObject.h>
 
 #include <caffeine-gl/gfx/Texture.h>

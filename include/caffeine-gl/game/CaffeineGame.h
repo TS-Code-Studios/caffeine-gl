@@ -3,9 +3,9 @@
 
 class ParticleGenerator;
 
-class Game {
+class CaffeineGame {
 public:
-	virtual ~Game() = default;
+	virtual ~CaffeineGame() = default;
 
 	virtual void Init() = 0;
 	virtual void Update(float deltaTime) = 0;

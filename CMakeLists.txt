@@ -19,7 +19,7 @@ find_package(OpenGL REQUIRED)
 add_library(${PROJECT_NAME} STATIC
         include/caffeine-gl/base.h
 
-        include/caffeine-gl/game/Game.h
+        include/caffeine-gl/game/CaffeineGame.h
 
         src/game/GameLevel.cpp
         include/caffeine-gl/game/GameLevel.h
