@@ -7,6 +7,7 @@
 
 std::map<std::string, Texture> ResourceManager::Textures;
 std::map<std::string, Shader> ResourceManager::Shaders;
+std::vector<CaffeineGameObject*> ResourceManager::GameObjects;
 
 Shader ResourceManager::LoadShader(const char *vertexShaderFile, const char *fragmentShaderFile, const char *geometryShaderFile, const std::string &name) {
     Shaders[name] = loadShaderFromFile(vertexShaderFile, fragmentShaderFile, geometryShaderFile);
