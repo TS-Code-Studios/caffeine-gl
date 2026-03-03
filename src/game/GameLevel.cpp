@@ -1,4 +1,4 @@
-#include <caffeine-gl/game/GameLevel.h>
+#include <caffeine-gl/game/GameLevel.hpp>
 
 #include <fstream>
 #include <sstream>
@@ -32,7 +32,7 @@ void GameLevel::Load(const char *file, unsigned int levelWidth, unsigned int lev
 }
 
 void GameLevel::Draw(SpriteRenderer &renderer) {
-    for (GameObject &tile : this->Bricks) {
+    for (CaffeineGameObject &tile : this->Bricks) {
         if (!tile.destroyed) {
             tile.Draw(renderer);
         }
@@ -40,7 +40,7 @@ void GameLevel::Draw(SpriteRenderer &renderer) {
 }
 
 bool GameLevel::isCompleted() {
-    for (const GameObject &tile : this->Bricks) {
+    for (const CaffeineGameObject &tile : this->Bricks) {
         if (!tile.isSolid && !tile.destroyed) {
             return false;
         }
@@ -63,7 +63,7 @@ void GameLevel::init(std::vector<std::vector<unsigned int>> tileData, unsigned i
                 glm::vec2 pos(unit_width * x, unit_height * y);
                 glm::vec2 size(unit_width, unit_height);
 
-                GameObject object(pos, size, ResourceManager::GetTexture("block_solid"), glm::vec3(0.8f, 0.8f, 0.7f));
+                CaffeineGameObject object(pos, size, ResourceManager::GetTexture("block_solid"), glm::vec3(0.8f, 0.8f, 0.7f));
                 object.isSolid = true;
 
                 this->Bricks.push_back(object);

@@ -1,9 +1,9 @@
 #ifndef BALL_H
 #define BALL_H
 
-#include "GameObject.h"
+#include <caffeine-gl/game/CaffeineGameObject.hpp>
 
-class BallClass : public GameObject {
+class BallClass : public CaffeineGameObject {
 public:
 	float radius;
 	bool stuck;

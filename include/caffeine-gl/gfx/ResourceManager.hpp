@@ -6,15 +6,16 @@
 
 #include <glad/glad.h>
 
-#include "Texture.h"
-#include "Shader.h"
-#include <caffeine-gl/game/GameObject.h>
+#include <caffeine-gl/gfx/Shader.hpp>
+#include <caffeine-gl/gfx/Texture.hpp>
+
+#include <caffeine-gl/game/CaffeineGameObject.hpp>
 
 class ResourceManager {
 public:
 	static std::map<std::string, Shader> Shaders;
 	static std::map<std::string, Texture> Textures;
-	static std::vector<GameObject*> GameObjects;
+	static std::vector<CaffeineGameObject*> GameObjects;
 
 	static Shader LoadShader(const char *vertexShaderFile, const char *fragmentShaderFile, const char *geometryShaderFile, const std::string &name);
 	static Shader& GetShader(const std::string& name);

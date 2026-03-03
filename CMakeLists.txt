@@ -17,29 +17,29 @@ endif()
 find_package(OpenGL REQUIRED)
 
 add_library(${PROJECT_NAME} STATIC
-        include/caffeine-gl/base.h
+        include/caffeine-gl/base.hpp
 
-        include/caffeine-gl/game/CaffeineGame.h
+        include/caffeine-gl/game/CaffeineGame.hpp
 
         src/game/GameLevel.cpp
-        include/caffeine-gl/game/GameLevel.h
-        src/game/GameObject.cpp
-        include/caffeine-gl/game/GameObject.h
+        include/caffeine-gl/game/GameLevel.hpp
+        src/game/CaffeineGameObject.cpp
+        include/caffeine-gl/game/CaffeineGameObject.hpp
         src/game/BallClass.cpp
-        include/caffeine-gl/game/BallClass.h
+        include/caffeine-gl/game/BallClass.hpp
 
         src/gfx/Shader.cpp
-        include/caffeine-gl/gfx/Shader.h
+        include/caffeine-gl/gfx/Shader.hpp
         src/gfx/Texture.cpp
-        include/caffeine-gl/gfx/Texture.h
+        include/caffeine-gl/gfx/Texture.hpp
         src/gfx/ResourceManager.cpp
-        include/caffeine-gl/gfx/ResourceManager.h
+        include/caffeine-gl/gfx/ResourceManager.hpp
         src/gfx/SpriteRenderer.cpp
-        include/caffeine-gl/gfx/SpriteRenderer.h
+        include/caffeine-gl/gfx/SpriteRenderer.hpp
         src/gfx/ParticleGenerator.cpp
-        include/caffeine-gl/gfx/ParticleGenerator.h
+        include/caffeine-gl/gfx/ParticleGenerator.hpp
 
-        include/caffeine-gl/ui/CaffeineWindow.h
+        include/caffeine-gl/ui/CaffeineWindow.hpp
         src/ui/CaffeineWindow.cpp
 
         src/glad.c

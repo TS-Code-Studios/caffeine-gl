@@ -1,10 +1,10 @@
-#include <caffeine-gl/game/BallClass.h>
+#include <caffeine-gl/game/BallClass.hpp>
 
 
-BallClass::BallClass(): GameObject(), radius(12.5f), stuck(true) { }
+BallClass::BallClass(): CaffeineGameObject(), radius(12.5f), stuck(true) { }
 
 BallClass::BallClass(glm::vec2 position, float radius, glm::vec2 velocity, Texture sprite)
-		: GameObject(position, glm::vec2(radius * 2.0f, radius * 2.0f), sprite, glm::vec3(1.0f), velocity),
+		: CaffeineGameObject(position, glm::vec2(radius * 2.0f, radius * 2.0f), sprite, glm::vec3(1.0f), velocity),
 		radius(radius), stuck(true) { }
 
 glm::vec2 BallClass::Move(float dt, unsigned int window_width, glm::vec2 player_position, glm::vec2 player_size) {

@@ -5,9 +5,10 @@
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 
-#include "../include/caffeine-gl/game/GameObject.h"
-#include "../gfx/SpriteRenderer.h"
-#include "../gfx/ResourceManager.h"
+#include <caffeine-gl/game/CaffeineGameObject.hpp>
+
+#include <caffeine-gl/gfx/ResourceManager.hpp>
+#include <caffeine-gl/gfx/SpriteRenderer.hpp>
 
 enum Level {
 	STANDARD,
@@ -27,7 +28,7 @@ enum Blocks {
 
 class GameLevel {
 public:
-	std::vector<GameObject> Bricks;
+	std::vector<CaffeineGameObject> Bricks;
 
 	GameLevel() = default;
 

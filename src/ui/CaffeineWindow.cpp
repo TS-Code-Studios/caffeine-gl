@@ -1,4 +1,4 @@
-#include <caffeine-gl/ui/CaffeineWindow.h>
+#include <caffeine-gl/ui/CaffeineWindow.hpp>
 
 
 CaffeineWindow::CaffeineWindow(const char* title) {

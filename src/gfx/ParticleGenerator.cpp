@@ -1,4 +1,4 @@
-#include <caffeine-gl/gfx/ParticleGenerator.h>
+#include <caffeine-gl/gfx/ParticleGenerator.hpp>
 #include <random>
 #include <iostream>
 
@@ -38,7 +38,7 @@ void ParticleGenerator::init() {
 }
 
 
-void ParticleGenerator::Update(float dt, GameObject &object, unsigned int newParticles, glm::vec2 offset) {
+void ParticleGenerator::Update(float dt, CaffeineGameObject &object, unsigned int newParticles, glm::vec2 offset) {
 	for(unsigned int i = 0; i < newParticles; i++) {
 		this->respawnParticle(particles[this->firstUnusedParticle()], object, offset);
 	}
@@ -75,7 +75,7 @@ unsigned int ParticleGenerator::firstUnusedParticle() {
 }
 
 
-void ParticleGenerator::respawnParticle(Particle &particle, GameObject &object, glm::vec2 offset) {
+void ParticleGenerator::respawnParticle(Particle &particle, CaffeineGameObject &object, glm::vec2 offset) {
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<> distr(0, 1);

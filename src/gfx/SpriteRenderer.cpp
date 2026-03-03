@@ -1,4 +1,4 @@
-#include <caffeine-gl/gfx/SpriteRenderer.h>
+#include <caffeine-gl/gfx/SpriteRenderer.hpp>
 
 SpriteRenderer::SpriteRenderer(Shader &shader) {
 	this->shader = shader;

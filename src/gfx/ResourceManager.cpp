@@ -2,7 +2,7 @@
 #include <sstream>
 #include <fstream>
 
-#include <caffeine-gl/gfx/ResourceManager.h>
+#include <caffeine-gl/gfx/ResourceManager.hpp>
 #include <caffeine-gl/gfx/stb_image.h>
 
 std::map<std::string, Texture> ResourceManager::Textures;

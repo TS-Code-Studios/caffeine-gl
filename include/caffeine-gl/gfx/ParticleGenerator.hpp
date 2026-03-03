@@ -4,9 +4,10 @@
 #include <vector>
 #include <glm/glm.hpp>
 
-#include "Shader.h"
-#include "Texture.h"
-#include <caffeine-gl/game/GameObject.h>
+#include <caffeine-gl/gfx/Shader.hpp>
+#include <caffeine-gl/gfx/Texture.hpp>
+
+#include <caffeine-gl/game/CaffeineGameObject.hpp>
 
 struct Particle {
 	glm::vec2 position, velocity;
@@ -27,7 +28,7 @@ public:
 	void SetPositionSpread(int positionSpread);
 	void SetColor(glm::vec4 color);
 
-	void Update(float dt, GameObject &object, unsigned int newParticles, glm::vec2 offset = glm::vec2(0.0f, 0.0f));
+	void Update(float dt, CaffeineGameObject &object, unsigned int newParticles, glm::vec2 offset = glm::vec2(0.0f, 0.0f));
 	void Draw();
 
 private:
@@ -44,7 +45,7 @@ private:
 
 	void init();
 	unsigned int firstUnusedParticle();
-	void respawnParticle(Particle &particle, GameObject &object, glm::vec2 offset = glm::vec2(0.0f, 0.0f));
+	void respawnParticle(Particle &particle, CaffeineGameObject &object, glm::vec2 offset = glm::vec2(0.0f, 0.0f));
 };
 
 #endif //PARTICLEGENERATOR_H

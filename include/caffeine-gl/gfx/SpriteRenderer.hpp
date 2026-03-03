@@ -1,8 +1,8 @@
 #ifndef SPRITE_RENDERER_H
 #define SPRITE_RENDERER_H
 
-#include "Shader.h"
-#include "Texture.h"
+#include <caffeine-gl/gfx/Shader.hpp>
+#include <caffeine-gl/gfx/Texture.hpp>
 
 class SpriteRenderer {
 public:
