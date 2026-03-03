@@ -1,5 +1,5 @@
-#ifndef GAMEOBJECT_H
-#define GAMEOBJECT_H
+#ifndef CAFFEINEGAMEOBJECT_H
+#define CAFFEINEGAMEOBJECT_H
 
 #include <glm/glm.hpp>
 
