@@ -29,12 +29,16 @@ Texture &ResourceManager::GetTexture(const std::string &name) {
 
 
 void ResourceManager::Clear() {
-    for (auto iter : Shaders) {
-        glDeleteProgram(iter.second.ID);
+    for (const auto&[fst, snd] : Shaders) {
+        glDeleteProgram(snd.ID);
     }
 
-    for (auto iter : Textures) {
-        glDeleteTextures(1, &iter.second.ID);
+    for (const auto&[fst, snd] : Textures) {
+        glDeleteTextures(1, &snd.ID);
+    }
+
+    for (const auto iteration : GameObjects) {
+        delete iteration;
     }
 }
 

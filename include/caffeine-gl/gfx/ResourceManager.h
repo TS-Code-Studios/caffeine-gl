@@ -8,11 +8,13 @@
 
 #include "Texture.h"
 #include "Shader.h"
+#include <caffeine-gl/game/GameObject.h>
 
 class ResourceManager {
 public:
 	static std::map<std::string, Shader> Shaders;
 	static std::map<std::string, Texture> Textures;
+	static std::vector<GameObject*> GameObjects;
 
 	static Shader LoadShader(const char *vertexShaderFile, const char *fragmentShaderFile, const char *geometryShaderFile, const std::string &name);
 	static Shader& GetShader(const std::string& name);
