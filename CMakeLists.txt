@@ -21,8 +21,6 @@ add_library(${PROJECT_NAME} STATIC
 
         include/caffeine-gl/game/CaffeineGame.hpp
 
-        src/game/GameLevel.cpp
-        include/caffeine-gl/game/GameLevel.hpp
         src/game/CaffeineGameObject.cpp
         include/caffeine-gl/game/CaffeineGameObject.hpp
         src/game/BallClass.cpp
