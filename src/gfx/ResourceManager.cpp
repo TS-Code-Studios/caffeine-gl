@@ -76,24 +76,41 @@ std::filesystem::path ResourceManager::resolveResourcePath(const std::filesystem
 
 
 // Shader management functions
-Shader ResourceManager::loadShader(const char *vertexShaderPath, const char *fragmentShaderPath, const char *geometryShaderPath, const std::string &name) {
+Shader& ResourceManager::loadShader(const char *vertexShaderPath, const char *fragmentShaderPath, const char *geometryShaderPath, const std::string &name) {
     shaders[name] = createShaderProgram(vertexShaderPath, fragmentShaderPath, geometryShaderPath);
     return shaders[name];
 }
-
 Shader& ResourceManager::getShader(const std::string& name) {
     return shaders[name];
 }
 
 // Texture management functions
-
-Texture ResourceManager::loadTexture(const char *file, bool alpha, const std::string& name) {
+Texture& ResourceManager::loadTexture(const char *file, bool alpha, const std::string& name) {
     textures[name] = loadTextureFromFile(file, alpha);
     return textures[name];
 }
-
-Texture &ResourceManager::getTexture(const std::string &name) {
+Texture& ResourceManager::getTexture(const std::string &name) {
     return textures[name];
+}
+
+// Mesh management functions
+void ResourceManager::createDefaultMeshes() {
+    const std::vector<Vertex2D> quadVertices = {
+        {-0.5f, -0.5f, 0,0, 1,1,1,1}, // Bottom left
+        { 0.5f, -0.5f, 1,0, 1,1,1,1}, // Bottom right
+        {-0.5f,  0.5f, 0,1, 1,1,1,1}, // Top left
+        { 0.5f,  0.5f, 1,1, 1,1,1,1}	// Top right
+    };
+    const std::vector<uint32_t> quadIndices = {0,1,2, 2,3,1};
+
+    loadMesh(quadVertices, quadIndices, "quad");
+}
+Mesh &ResourceManager::loadMesh(const std::vector<Vertex2D> &vertices, const std::vector<uint32_t> &indices, const std::string &name) {
+    meshes[name] = Mesh(vertices, indices);
+    return meshes[name];
+}
+Mesh &ResourceManager::getMesh(const std::string &name) {
+    return meshes[name];
 }
 
 

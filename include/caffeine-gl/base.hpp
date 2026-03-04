@@ -10,6 +10,6 @@
 #include <caffeine-gl/gfx/Shader.hpp>
 #include <caffeine-gl/gfx/ParticleGenerator.hpp>
 #include <caffeine-gl/gfx/ResourceManager.hpp>
-#include <caffeine-gl/gfx/SpriteRenderer.hpp>
+#include <caffeine-gl/gfx/Renderer.hpp>
 
 #endif //BASE_H

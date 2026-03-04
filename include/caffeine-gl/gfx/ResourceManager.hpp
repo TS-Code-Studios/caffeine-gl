@@ -20,6 +20,8 @@
 
 #include <caffeine-gl/game/CaffeineGameObject.hpp>
 
+#include "Mesh.hpp"
+
 class ResourceManager {
 public:
 	static std::filesystem::path getExecutablePath();
@@ -27,12 +29,15 @@ public:
 	static std::filesystem::path getResourceRoot();
 
 
-	static Shader loadShader(const char *vertexShaderPath, const char *fragmentShaderPath, const char *geometryShaderPath, const std::string &name);
+	static Shader& loadShader(const char *vertexShaderPath, const char *fragmentShaderPath, const char *geometryShaderPath, const std::string &name);
 	static Shader& getShader(const std::string& name);
 
-	static Texture loadTexture(const char *file, bool alpha, const std::string& name);
+	static Texture& loadTexture(const char *file, bool alpha, const std::string& name);
 	static Texture& getTexture(const std::string &name);
 
+	static void createDefaultMeshes();
+	static Mesh& loadMesh(const std::vector<Vertex2D> &vertices, const std::vector<uint32_t> &indices, const std::string& name);
+	static Mesh& getMesh(const std::string &name);
 
 	static void clear();
 
@@ -43,8 +48,7 @@ private:
 
 	static std::map<std::string, Shader> shaders;
 	static std::map<std::string, Texture> textures;
-	static std::vector<CaffeineGameObject*> gameObjects;
-
+	static std::map<std::string, Mesh> meshes;
 
 	static Shader createShaderProgram(const char *vertexShaderPath, const char *fragmentShaderPath, const char *geometryShaderPath = nullptr);
 	static std::string loadShaderCodeFromFile(const std::filesystem::path& path);

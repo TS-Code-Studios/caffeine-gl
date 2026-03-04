@@ -1,0 +1,14 @@
+#ifndef CAFFEINEDRAWABLE_HPP
+#define CAFFEINEDRAWABLE_HPP
+
+#include <caffeine-gl/game/CaffeineGameObject.hpp>
+#include <caffeine-gl/gfx/Renderer.hpp>
+
+class CaffeineDrawable : CaffeineGameObject {
+public:
+	~CaffeineDrawable() override = default;
+
+	virtual void submitToRenderer(Renderer& renderer) = 0;
+};
+
+#endif //CAFFEINEDRAWABLE_HPP

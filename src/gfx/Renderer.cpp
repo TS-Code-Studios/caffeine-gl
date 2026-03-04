@@ -1,16 +1,16 @@
-#include <caffeine-gl/gfx/SpriteRenderer.hpp>
+#include <caffeine-gl/gfx/Renderer.hpp>
 
-SpriteRenderer::SpriteRenderer(Shader &shader) {
+Renderer::Renderer(Shader &shader) {
 	this->shader = shader;
 	this->initRenderData();
 }
 
-SpriteRenderer::~SpriteRenderer() {
+Renderer::~Renderer() {
 	glDeleteVertexArrays(1, &this->quadVAO);
 }
 
 
-void SpriteRenderer::DrawSprite(Texture &texture, glm::vec2 position, glm::vec2 size, float rotate, glm::vec3 color) {
+void Renderer::DrawSprite(Texture &texture, glm::vec2 position, glm::vec2 size, float rotate, glm::vec3 color) {
 	this->shader.activate();
 
 	auto modelMatrix = glm::mat4(1.0f);
@@ -33,7 +33,7 @@ void SpriteRenderer::DrawSprite(Texture &texture, glm::vec2 position, glm::vec2 
 	glBindVertexArray(0);
 }
 
-void SpriteRenderer::initRenderData() {
+void Renderer::initRenderData() {
 	constexpr float vertices[] = {
 		// XYZ      // UV
 		0.0f, 1.0f, 0.0f, 1.0f,
