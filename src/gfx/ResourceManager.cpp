@@ -7,23 +7,19 @@
 
 std::filesystem::path ResourceManager::resourceRoot;
 
+std::vector<std::unique_ptr<CaffeineMeshDrawable>> ResourceManager::gameObjects;
+
 std::map<std::string, Texture> ResourceManager::textures;
 std::map<std::string, Shader> ResourceManager::shaders;
-std::vector<CaffeineGameObject*> ResourceManager::gameObjects;
+std::map<std::string, Mesh> ResourceManager::meshes;
 
 // Free all loaded resources
 void ResourceManager::clear() {
-    for (const auto&[fst, snd] : shaders) {
-        glDeleteProgram(snd.ID);
-    }
+    gameObjects.clear();
 
-    for (const auto&[fst, snd] : textures) {
-        glDeleteTextures(1, &snd.ID);
-    }
-
-    for (const auto iteration : gameObjects) {
-        delete iteration;
-    }
+    shaders.clear();
+    textures.clear();
+    meshes.clear();
 }
 
 
@@ -105,11 +101,11 @@ void ResourceManager::createDefaultMeshes() {
 
     loadMesh(quadVertices, quadIndices, "quad");
 }
-Mesh &ResourceManager::loadMesh(const std::vector<Vertex2D> &vertices, const std::vector<uint32_t> &indices, const std::string &name) {
+Mesh& ResourceManager::loadMesh(const std::vector<Vertex2D> &vertices, const std::vector<uint32_t> &indices, const std::string &name) {
     meshes[name] = Mesh(vertices, indices);
     return meshes[name];
 }
-Mesh &ResourceManager::getMesh(const std::string &name) {
+Mesh& ResourceManager::getMesh(const std::string &name) {
     return meshes[name];
 }
 
@@ -174,8 +170,9 @@ Texture ResourceManager::loadTextureFromFile(const char *file, bool alpha) {
     int width, height, nrChannels;
     unsigned char* data = stbi_load(file, &width, &height, &nrChannels, 0);
 
+
     if(data == nullptr) {
-        file = "resources/textures/missing_texture.png";
+        file = "textures/missing_texture.png";
         texture.format_INTERNAL = GL_RGB;
         texture.format_IMAGE = GL_RGB;
 

@@ -8,11 +8,17 @@
 
 class CaffeineMeshDrawable final : CaffeineDrawable {
 public:
-	Mesh mesh;
-	Material material;
-
-	CaffeineMeshDrawable();
+	CaffeineMeshDrawable(const Mesh &mesh, const Material &material);
 	void submitToRenderer(Renderer &renderer) override;
+
+	void move(const glm::vec2 &delta);
+	void scale(const glm::vec2 &factor);
+	void rotate(const float &radians);
+
+private:
+	const Mesh *mesh;
+	Material material;
+	Transform transform;
 };
 
 #endif //CAFFEINEMESHDRAWABLE_HPP

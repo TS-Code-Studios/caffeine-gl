@@ -1,61 +1,27 @@
+#include <iostream>
 #include <caffeine-gl/gfx/Renderer.hpp>
 
-Renderer::Renderer(Shader &shader) {
-	this->shader = shader;
-	this->initRenderData();
+std::vector<RenderingCommand> Renderer::renderingCommands;
+
+void Renderer::queueRenderingCommand(const Mesh &mesh, const Material &material, const Transform &transform) {
+	renderingCommands.push_back({ mesh, material, transform});
+	std::cout << "Queued rendering command with position (" << transform.position.x << ", " << transform.position.y << ")\n";
+	std::cout << "Queued rendering command with size (" << transform.size.x << ", " << transform.size.y << ")\n";
+
 }
 
-Renderer::~Renderer() {
-	glDeleteVertexArrays(1, &this->quadVAO);
-}
+void Renderer::renderAll() {
+	for(auto &[mesh, material, transform] : renderingCommands) {
 
+		if(material.texture) {
+			material.texture->bind();
+		}
 
-void Renderer::DrawSprite(Texture &texture, glm::vec2 position, glm::vec2 size, float rotate, glm::vec3 color) {
-	this->shader.activate();
+		material.shader->setMatrix4("modelMatrix", transform.getModelMatrix());
+		material.shader->activate();
 
-	auto modelMatrix = glm::mat4(1.0f);
-	modelMatrix = glm::translate(modelMatrix, glm::vec3(position, 0.0f));
+		mesh.draw();
+	}
 
-	modelMatrix = glm::translate(modelMatrix, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f));
-	modelMatrix = glm::rotate(modelMatrix, glm::radians(rotate), glm::vec3(0.0f, 0.0f, 1.0f));
-	modelMatrix = glm::translate(modelMatrix, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f));
-
-	modelMatrix = glm::scale(modelMatrix, glm::vec3(size, 1.0f));
-
-	this->shader.setMatrix4("modelMatrix", modelMatrix);
-	this->shader.setVector3f("spriteColor", color);
-
-	glActiveTexture(GL_TEXTURE0);
-	texture.bind();
-
-	glBindVertexArray(this->quadVAO);
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-	glBindVertexArray(0);
-}
-
-void Renderer::initRenderData() {
-	constexpr float vertices[] = {
-		// XYZ      // UV
-		0.0f, 1.0f, 0.0f, 1.0f,
-		1.0f, 0.0f, 1.0f, 0.0f,
-		0.0f, 0.0f, 0.0f, 0.0f,
-
-		0.0f, 1.0f, 0.0f, 1.0f,
-		1.0f, 1.0f, 1.0f, 1.0f,
-		1.0f, 0.0f, 1.0f, 0.0f
-	};
-
-	unsigned int VBO;
-
-	glGenVertexArrays(1, &this->quadVAO);
-	glGenBuffers(1, &VBO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	glBindVertexArray(this->quadVAO);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), static_cast<void *>(nullptr));
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
+	renderingCommands.clear();
 }

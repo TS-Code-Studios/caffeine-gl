@@ -7,12 +7,17 @@ Texture::Texture()
 	glGenTextures(1, &this->ID);
 }
 
+Texture::~Texture() {
+	glDeleteTextures(1, &this->ID);
+}
+
+
 void Texture::generate(const unsigned int width, const unsigned int height, const unsigned char* data) {
 	this->width = width;
 	this->height = height;
 
 	glBindTexture(GL_TEXTURE_2D, this->ID);
-	glTexImage2D(GL_TEXTURE_2D, 0, this->format_INTERNAL, width, height, 0, this->format_IMAGE, GL_UNSIGNED_BYTE, data);
+	glTexImage2D(GL_TEXTURE_2D, 0, this->format_INTERNAL, this->width, this->height, 0, this->format_IMAGE, GL_UNSIGNED_BYTE, data);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, this->wrap_S);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, this->wrap_T);

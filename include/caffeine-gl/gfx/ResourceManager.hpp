@@ -21,12 +21,27 @@
 #include <caffeine-gl/game/CaffeineGameObject.hpp>
 
 #include "Mesh.hpp"
+#include "caffeine-gl/game/CaffeineMeshDrawable.hpp"
+
 
 class ResourceManager {
 public:
 	static std::filesystem::path getExecutablePath();
 	static void setResourceRoot(const std::filesystem::path& root);
 	static std::filesystem::path getResourceRoot();
+
+
+	template<typename GameObjectSubclass, typename... Args>
+	static GameObjectSubclass* createGameObject(Args &&... args) {
+		//static_assert(std::is_base_of_v<CaffeineGameObject, GameObjectSubclass>, "Subclass must derive from CaffeineGameObject");
+
+		auto object = std::make_unique<GameObjectSubclass>(std::forward<Args>(args)...);
+
+		GameObjectSubclass* ptr = object.get();
+		gameObjects.push_back(std::move(object));
+
+		return ptr;
+	}
 
 
 	static Shader& loadShader(const char *vertexShaderPath, const char *fragmentShaderPath, const char *geometryShaderPath, const std::string &name);
@@ -45,7 +60,7 @@ private:
 	static std::filesystem::path resourceRoot;
 	static std::filesystem::path resolveResourcePath(const std::filesystem::path& relativePath);
 
-
+	static std::vector<std::unique_ptr<CaffeineMeshDrawable>> gameObjects;
 	static std::map<std::string, Shader> shaders;
 	static std::map<std::string, Texture> textures;
 	static std::map<std::string, Mesh> meshes;

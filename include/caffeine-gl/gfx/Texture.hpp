@@ -12,6 +12,7 @@ public:
 	unsigned int filter_MIN, filter_MAX;
 
 	Texture();
+	~Texture();
 	void generate(unsigned int width, unsigned int height, const unsigned char* data);
 	void bind() const;
 };

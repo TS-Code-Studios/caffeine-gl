@@ -4,23 +4,23 @@
 #include <caffeine-gl/gfx/Shader.hpp>
 #include <caffeine-gl/gfx/Texture.hpp>
 
-#include "Material.hpp"
-#include "Mesh.hpp"
+#include <caffeine-gl/gfx/Material.hpp>
+#include <caffeine-gl/gfx/Mesh.hpp>
+
+#include "caffeine-gl/game/Transform.hpp"
+
+struct RenderingCommand {
+	const Mesh& mesh;
+	const Material& material;
+	const Transform& transform;
+};
 
 class Renderer {
 public:
-	
+	static std::vector<RenderingCommand> renderingCommands;
 
-	explicit Renderer(Shader &shader);
-	~Renderer();
-
-	static void queueRenderingCommand(const Mesh &mesh, const Material &material);
-
-private:
-	Shader shader;
-	unsigned int quadVAO;
-
-	void initRenderData();
+	void queueRenderingCommand(const Mesh &mesh, const Material &material, const Transform &transform);
+	void renderAll();
 };
 
 #endif //SPRITE_RENDERER_H

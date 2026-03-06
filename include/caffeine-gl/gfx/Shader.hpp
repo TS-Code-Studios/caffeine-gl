@@ -12,9 +12,13 @@ class Shader {
 public:
 	unsigned int ID;
 
-	Shader() { };
+	Shader(): ID(0) {
+	} ;
 
-	Shader &activate();
+	~Shader();
+
+
+	void activate() const;
 
 	void compile(const char *vertexSource, const char *fragmentSource, const char *geometrySource = nullptr);
 

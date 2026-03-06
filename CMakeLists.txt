@@ -21,7 +21,6 @@ add_library(${PROJECT_NAME} STATIC
 
         include/caffeine-gl/game/CaffeineGame.hpp
 
-        src/game/CaffeineGameObject.cpp
         include/caffeine-gl/game/CaffeineGameObject.hpp
 
         src/gfx/Shader.cpp
@@ -32,8 +31,8 @@ add_library(${PROJECT_NAME} STATIC
         include/caffeine-gl/gfx/ResourceManager.hpp
         src/gfx/Renderer.cpp
         include/caffeine-gl/gfx/Renderer.hpp
-        src/gfx/ParticleGenerator.cpp
-        include/caffeine-gl/gfx/ParticleGenerator.hpp
+        #src/gfx/ParticleGenerator.cpp
+        #include/caffeine-gl/gfx/ParticleGenerator.hpp
 
         include/caffeine-gl/ui/CaffeineWindow.hpp
         src/ui/CaffeineWindow.cpp
@@ -48,6 +47,7 @@ add_library(${PROJECT_NAME} STATIC
         src/game/Transform.cpp
         include/caffeine-gl/gfx/Mesh.hpp
         include/caffeine-gl/gfx/Material.hpp
+        src/game/CaffeineMeshDrawable.cpp
 )
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)

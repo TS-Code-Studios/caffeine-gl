@@ -18,8 +18,16 @@ struct Mesh {
 
 	uint32_t indexCount = 0;
 
+	Mesh() = default;
+
 	Mesh(const std::vector<Vertex2D> &vertices, const std::vector<uint32_t> &indices) {
 		bufferData(vertices, indices);
+	}
+
+	~Mesh() {
+		glDeleteVertexArrays(1, &vao);
+		glDeleteBuffers(1, &vbo);
+		glDeleteBuffers(1, &ebo);
 	}
 
 	void bufferData(const std::vector<Vertex2D> &vertices, const std::vector<uint32_t> &indices) {

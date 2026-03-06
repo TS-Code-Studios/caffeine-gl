@@ -3,10 +3,14 @@
 #include <iostream>
 
 
-Shader &Shader::activate() {
+void Shader::activate() const {
     glUseProgram(this->ID);
-    return *this;
 }
+
+Shader::~Shader() {
+    glDeleteProgram(this->ID);
+}
+
 
 void Shader::compile(const char* vertexSource, const char* fragmentSource, const char* geometrySource) {
 
