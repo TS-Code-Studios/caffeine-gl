@@ -63,6 +63,9 @@ struct Mesh {
 	void draw() const {
 		glBindVertexArray(vao);
 		glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, static_cast<void*>(nullptr));
+		while(GLenum err = glGetError()) {
+			std::cerr << "OpenGL error: " << err << std::endl;
+		}
 		glBindVertexArray(0);
 	}
 };

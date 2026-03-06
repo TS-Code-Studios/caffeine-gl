@@ -6,7 +6,7 @@
 
 #include <caffeine-gl/game/CaffeineDrawable.hpp>
 
-class CaffeineMeshDrawable final : CaffeineDrawable {
+class CaffeineMeshDrawable final : public CaffeineDrawable {
 public:
 	CaffeineMeshDrawable(const Mesh &mesh, const Material &material);
 	void submitToRenderer(Renderer &renderer) override;

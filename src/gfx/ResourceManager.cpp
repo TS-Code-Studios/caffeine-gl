@@ -7,7 +7,7 @@
 
 std::filesystem::path ResourceManager::resourceRoot;
 
-std::vector<std::unique_ptr<CaffeineMeshDrawable>> ResourceManager::gameObjects;
+std::vector<std::unique_ptr<CaffeineGameObject>> ResourceManager::gameObjects;
 
 std::map<std::string, Texture> ResourceManager::textures;
 std::map<std::string, Shader> ResourceManager::shaders;
@@ -73,11 +73,11 @@ std::filesystem::path ResourceManager::resolveResourcePath(const std::filesystem
 
 // Shader management functions
 Shader& ResourceManager::loadShader(const char *vertexShaderPath, const char *fragmentShaderPath, const char *geometryShaderPath, const std::string &name) {
-    shaders[name] = createShaderProgram(vertexShaderPath, fragmentShaderPath, geometryShaderPath);
+    shaders.emplace(name, createShaderProgram(vertexShaderPath, fragmentShaderPath, geometryShaderPath));
     return shaders[name];
 }
 Shader& ResourceManager::getShader(const std::string& name) {
-    return shaders[name];
+    return shaders.at(name);
 }
 
 // Texture management functions
@@ -102,7 +102,7 @@ void ResourceManager::createDefaultMeshes() {
     loadMesh(quadVertices, quadIndices, "quad");
 }
 Mesh& ResourceManager::loadMesh(const std::vector<Vertex2D> &vertices, const std::vector<uint32_t> &indices, const std::string &name) {
-    meshes[name] = Mesh(vertices, indices);
+    meshes.emplace(name, Mesh(vertices, indices));
     return meshes[name];
 }
 Mesh& ResourceManager::getMesh(const std::string &name) {
@@ -116,7 +116,6 @@ Shader ResourceManager::createShaderProgram(const char *vertexShaderPath, const 
     std::string vertexShaderCode;
     std::string fragmentShaderCode;
     std::string geometryShaderCode;
-
 
     try {
         const std::filesystem::path resolvedVertexPath = resolveResourcePath(vertexShaderPath).string();
@@ -160,7 +159,9 @@ std::string ResourceManager::loadShaderCodeFromFile(const std::filesystem::path&
 }
 
 
-Texture ResourceManager::loadTextureFromFile(const char *file, bool alpha) {
+Texture ResourceManager::loadTextureFromFile(const char *path, const bool alpha) {
+    std::string resolvedPath = resolveResourcePath(path).string();
+
     Texture texture;
     if (alpha) {
         texture.format_INTERNAL = GL_RGBA;
@@ -168,15 +169,17 @@ Texture ResourceManager::loadTextureFromFile(const char *file, bool alpha) {
     }
 
     int width, height, nrChannels;
-    unsigned char* data = stbi_load(file, &width, &height, &nrChannels, 0);
+    unsigned char* data = stbi_load(resolvedPath.c_str(), &width, &height, &nrChannels, 0);
 
 
     if(data == nullptr) {
-        file = "textures/missing_texture.png";
+        std::cerr << "Failed to load texture: " << resolvedPath << ", falling back to placeholder" << std::endl;
+
+        resolvedPath = resolveResourcePath("textures/missing_texture.png").string();
         texture.format_INTERNAL = GL_RGB;
         texture.format_IMAGE = GL_RGB;
 
-        data = stbi_load(file, &width, &height, &nrChannels, 0);
+        data = stbi_load(resolvedPath.c_str(), &width, &height, &nrChannels, 0);
     }
 
     texture.filter_MAX = GL_NEAREST;

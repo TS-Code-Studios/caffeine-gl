@@ -4,7 +4,7 @@
 #include <caffeine-gl/game/CaffeineGameObject.hpp>
 #include <caffeine-gl/gfx/Renderer.hpp>
 
-class CaffeineDrawable : CaffeineGameObject {
+class CaffeineDrawable : public CaffeineGameObject {
 public:
 	~CaffeineDrawable() override = default;
 

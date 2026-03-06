@@ -1,5 +1,5 @@
-#ifndef SPRITE_RENDERER_H
-#define SPRITE_RENDERER_H
+#ifndef RENDERER_H
+#define RENDERER_H
 
 #include <caffeine-gl/gfx/Shader.hpp>
 #include <caffeine-gl/gfx/Texture.hpp>
@@ -17,10 +17,13 @@ struct RenderingCommand {
 
 class Renderer {
 public:
-	static std::vector<RenderingCommand> renderingCommands;
+	std::vector<RenderingCommand> renderingCommands;
+	glm::mat4 projectionMatrix{};
+
+	Renderer(float width, float height);
 
 	void queueRenderingCommand(const Mesh &mesh, const Material &material, const Transform &transform);
 	void renderAll();
 };
 
-#endif //SPRITE_RENDERER_H
+#endif //RENDERER_H

@@ -17,6 +17,23 @@ public:
 
 	~Shader();
 
+	Shader(const Shader&) = delete;
+	Shader& operator=(const Shader&) = delete;
+
+	Shader(Shader&& other) noexcept {
+		ID = other.ID;
+		other.ID = 0;
+	}
+
+	Shader& operator=(Shader&& other) noexcept {
+		if (this != &other) {
+			glDeleteProgram(ID);
+			ID = other.ID;
+			other.ID = 0;
+		}
+		return *this;
+	}
+
 
 	void activate() const;
 

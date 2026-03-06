@@ -43,7 +43,6 @@ CaffeineWindow::CaffeineWindow(const char* title) {
 
 CaffeineWindow::~CaffeineWindow() {
 	glfwDestroyWindow(window);
-	delete videoMode;
 
 	glfwTerminate();
 }
@@ -85,6 +84,7 @@ void framebufferSizeCallback(GLFWwindow* window, const int width, const int heig
 	if(auto* thisWindow = static_cast<CaffeineWindow*>(glfwGetWindowUserPointer(window))) {
 		thisWindow->WIDTH = width;
 		thisWindow->HEIGHT = height;
+		glViewport(0, 0, width, height);
 	}
 }
 

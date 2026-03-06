@@ -1,5 +1,7 @@
 #include <caffeine-gl/gfx/Texture.hpp>
 
+#include <iostream>
+
 #include <glad/glad.h>
 
 Texture::Texture()

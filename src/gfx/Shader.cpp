@@ -13,7 +13,6 @@ Shader::~Shader() {
 
 
 void Shader::compile(const char* vertexSource, const char* fragmentSource, const char* geometrySource) {
-
     const unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader, 1, &vertexSource, nullptr);
     glCompileShader(vertexShader);
@@ -28,9 +27,6 @@ void Shader::compile(const char* vertexSource, const char* fragmentSource, const
     glAttachShader(this->ID, vertexShader);
     glAttachShader(this->ID, fragmentShader);
 
-    glLinkProgram(this->ID);
-    checkCompileErrors(this->ID, "PROGRAM");
-
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 
@@ -44,6 +40,10 @@ void Shader::compile(const char* vertexSource, const char* fragmentSource, const
         glAttachShader(this->ID, geometryShader);
         glDeleteShader(geometryShader);
     }
+
+    glLinkProgram(this->ID);
+
+    checkCompileErrors(this->ID, "PROGRAM");
 }
 
 void Shader::setFloat(const char *name, const float value, const bool activateShader) {
@@ -111,6 +111,9 @@ void Shader::setMatrix4(const char *name, const glm::mat4 &matrix, const bool ac
     if (activateShader) {
         this->activate();
     }
+
+    int location = glGetUniformLocation(this->ID, name);
+    std::cout << "Setting matrix uniform '" << name << "' at location " << location << std::endl;
 
     glUniformMatrix4fv(glGetUniformLocation(this->ID, name), 1, false, glm::value_ptr(matrix));
 }

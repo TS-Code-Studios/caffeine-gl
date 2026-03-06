@@ -33,7 +33,7 @@ public:
 
 	template<typename GameObjectSubclass, typename... Args>
 	static GameObjectSubclass* createGameObject(Args &&... args) {
-		//static_assert(std::is_base_of_v<CaffeineGameObject, GameObjectSubclass>, "Subclass must derive from CaffeineGameObject");
+		static_assert(std::is_base_of_v<CaffeineGameObject, GameObjectSubclass>, "Subclass must derive from CaffeineGameObject");
 
 		auto object = std::make_unique<GameObjectSubclass>(std::forward<Args>(args)...);
 
@@ -60,14 +60,14 @@ private:
 	static std::filesystem::path resourceRoot;
 	static std::filesystem::path resolveResourcePath(const std::filesystem::path& relativePath);
 
-	static std::vector<std::unique_ptr<CaffeineMeshDrawable>> gameObjects;
+	static std::vector<std::unique_ptr<CaffeineGameObject>> gameObjects;
 	static std::map<std::string, Shader> shaders;
 	static std::map<std::string, Texture> textures;
 	static std::map<std::string, Mesh> meshes;
 
 	static Shader createShaderProgram(const char *vertexShaderPath, const char *fragmentShaderPath, const char *geometryShaderPath = nullptr);
 	static std::string loadShaderCodeFromFile(const std::filesystem::path& path);
-	static Texture loadTextureFromFile(const char *file, bool alpha);
+	static Texture loadTextureFromFile(const char *path, bool alpha);
 };
 
 #endif //RESOURCEMANAGER_H

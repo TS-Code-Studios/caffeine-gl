@@ -3,7 +3,7 @@
 
 class Texture {
 public:
-	unsigned int ID;
+	unsigned int ID{};
 
 	unsigned int width, height;
 	unsigned int format_INTERNAL, format_IMAGE;
