@@ -8,14 +8,23 @@
 std::filesystem::path ResourceManager::resourceRoot;
 
 std::vector<std::unique_ptr<CaffeineGameObject>> ResourceManager::gameObjects;
+std::vector<CaffeineDrawable*> ResourceManager::drawables;
 
 std::map<std::string, Texture> ResourceManager::textures;
 std::map<std::string, Shader> ResourceManager::shaders;
 std::map<std::string, Mesh> ResourceManager::meshes;
 
+void ResourceManager::renderAllDrawables(Renderer &renderer) {
+    for (CaffeineDrawable* drawable : drawables) {
+        drawable->submitToRenderer(renderer);
+    }
+    renderer.renderAll();
+}
+
 // Free all loaded resources
 void ResourceManager::clear() {
     gameObjects.clear();
+    drawables.clear();
 
     shaders.clear();
     textures.clear();
@@ -74,19 +83,19 @@ std::filesystem::path ResourceManager::resolveResourcePath(const std::filesystem
 // Shader management functions
 Shader& ResourceManager::loadShader(const char *vertexShaderPath, const char *fragmentShaderPath, const char *geometryShaderPath, const std::string &name) {
     shaders.emplace(name, createShaderProgram(vertexShaderPath, fragmentShaderPath, geometryShaderPath));
-    return shaders[name];
+    return shaders.at(name);
 }
 Shader& ResourceManager::getShader(const std::string& name) {
     return shaders.at(name);
 }
 
 // Texture management functions
-Texture& ResourceManager::loadTexture(const char *file, bool alpha, const std::string& name) {
-    textures[name] = loadTextureFromFile(file, alpha);
-    return textures[name];
+Texture& ResourceManager::loadTexture(const char *file, const std::string& name) {
+    textures.emplace(name, loadTextureFromFile(file));
+    return textures.at(name);
 }
 Texture& ResourceManager::getTexture(const std::string &name) {
-    return textures[name];
+    return textures.at(name);
 }
 
 // Mesh management functions
@@ -102,11 +111,11 @@ void ResourceManager::createDefaultMeshes() {
     loadMesh(quadVertices, quadIndices, "quad");
 }
 Mesh& ResourceManager::loadMesh(const std::vector<Vertex2D> &vertices, const std::vector<uint32_t> &indices, const std::string &name) {
-    meshes.emplace(name, Mesh(vertices, indices));
-    return meshes[name];
+    meshes.try_emplace(name, vertices, indices);
+    return meshes.at(name);
 }
 Mesh& ResourceManager::getMesh(const std::string &name) {
-    return meshes[name];
+    return meshes.at(name);
 }
 
 
@@ -159,16 +168,13 @@ std::string ResourceManager::loadShaderCodeFromFile(const std::filesystem::path&
 }
 
 
-Texture ResourceManager::loadTextureFromFile(const char *path, const bool alpha) {
+Texture ResourceManager::loadTextureFromFile(const char *path) {
     std::string resolvedPath = resolveResourcePath(path).string();
 
     Texture texture;
-    if (alpha) {
-        texture.format_INTERNAL = GL_RGBA;
-        texture.format_IMAGE = GL_RGBA;
-    }
 
     int width, height, nrChannels;
+    stbi_set_flip_vertically_on_load(true);
     unsigned char* data = stbi_load(resolvedPath.c_str(), &width, &height, &nrChannels, 0);
 
 
@@ -183,6 +189,13 @@ Texture ResourceManager::loadTextureFromFile(const char *path, const bool alpha)
     }
 
     texture.filter_MAX = GL_NEAREST;
+    if(nrChannels == 4) {
+        texture.format_IMAGE = GL_RGBA;
+        texture.format_INTERNAL = GL_RGBA;
+    } else if(nrChannels == 3) {
+        texture.format_IMAGE = GL_RGB;
+        texture.format_INTERNAL = GL_RGB;
+    }
 
     texture.generate(width, height, data);
 

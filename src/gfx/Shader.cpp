@@ -112,9 +112,6 @@ void Shader::setMatrix4(const char *name, const glm::mat4 &matrix, const bool ac
         this->activate();
     }
 
-    int location = glGetUniformLocation(this->ID, name);
-    std::cout << "Setting matrix uniform '" << name << "' at location " << location << std::endl;
-
     glUniformMatrix4fv(glGetUniformLocation(this->ID, name), 1, false, glm::value_ptr(matrix));
 }
 

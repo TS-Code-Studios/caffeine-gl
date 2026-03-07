@@ -20,6 +20,32 @@ struct Mesh {
 
 	Mesh() = default;
 
+	Mesh(const Mesh&) = delete;
+	Mesh& operator=(const Mesh&) = delete;
+
+	Mesh(Mesh&& other) noexcept {
+		vao = other.vao;
+		vbo = other.vbo;
+		ebo = other.ebo;
+		indexCount = other.indexCount;
+
+		other.vao = 0;
+		other.vbo = 0;
+		other.ebo = 0;
+	}
+
+	Mesh& operator=(Mesh&& other) noexcept {
+		vao = other.vao;
+		vbo = other.vbo;
+		ebo = other.ebo;
+		indexCount = other.indexCount;
+
+		other.vao = 0;
+		other.vbo = 0;
+		other.ebo = 0;
+		return *this;
+	}
+
 	Mesh(const std::vector<Vertex2D> &vertices, const std::vector<uint32_t> &indices) {
 		bufferData(vertices, indices);
 	}
@@ -63,9 +89,6 @@ struct Mesh {
 	void draw() const {
 		glBindVertexArray(vao);
 		glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, static_cast<void*>(nullptr));
-		while(GLenum err = glGetError()) {
-			std::cerr << "OpenGL error: " << err << std::endl;
-		}
 		glBindVertexArray(0);
 	}
 };
