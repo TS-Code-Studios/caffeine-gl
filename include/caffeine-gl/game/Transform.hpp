@@ -13,9 +13,6 @@ public:
 	explicit Transform(glm::vec2 position = glm::vec2(0.0f), float rotation = 0.0f, glm::vec2 size = glm::vec2(1.0f));
 
 	[[nodiscard]] glm::mat4 getModelMatrix() const;
-	void translate(const glm::vec2 &delta);
-	void rotate(const float &radians);
-	void scale(const glm::vec2 &factor);
 };
 
 

@@ -6,19 +6,6 @@ Transform::Transform(glm::vec2 position, float rotation, glm::vec2 scale) {
 	this->size = scale;
 }
 
-void Transform::translate(const glm::vec2 &delta) {
-	position += delta;
-}
-
-void Transform::rotate(const float &degrees) {
-	this->rotation += degrees;
-}
-
-
-void Transform::scale(const glm::vec2 &factor) {
-	this->size *= factor;
-}
-
 
 glm::mat4 Transform::getModelMatrix() const {
 	auto modelMatrix = glm::mat4(1.0f);
