@@ -64,6 +64,7 @@ void CaffeineWindow::createViewport() const {
 
 void CaffeineWindow::update() const {
 	glfwSwapBuffers(window);
+	glClear(GL_COLOR_BUFFER_BIT);
 	glfwPollEvents();
 }
 
