@@ -14,15 +14,15 @@ std::map<std::string, Texture> ResourceManager::textures;
 std::map<std::string, Shader> ResourceManager::shaders;
 std::map<std::string, Mesh> ResourceManager::meshes;
 
-void ResourceManager::renderAllDrawables(Renderer &renderer) {
+void ResourceManager::renderAllDrawables() {
     for(auto& [layer, drawableArray] : drawableLayers) {
         for (CaffeineDrawable* drawable : drawableArray) {
             if(drawable->visible) {
-                drawable->submitToRenderer(renderer);
+                drawable->submitToRenderer();
             }
         }
     }
-    renderer.renderAll();
+    Renderer::renderAll();
 }
 
 // Free all loaded resources

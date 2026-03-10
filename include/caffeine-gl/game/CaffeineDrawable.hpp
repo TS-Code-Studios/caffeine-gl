@@ -10,7 +10,7 @@ public:
 
 	~CaffeineDrawable() override = default;
 
-	virtual void submitToRenderer(Renderer& renderer) = 0;
+	virtual void submitToRenderer() = 0;
 };
 
 #endif //CAFFEINEDRAWABLE_HPP

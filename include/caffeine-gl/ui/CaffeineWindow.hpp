@@ -8,7 +8,7 @@
 
 class CaffeineWindow {
 public:
-	int WIDTH, HEIGHT;
+	int windowWidth, windowHeight;
 	bool keys[1024]{}, processedKeys[1024]{};
 
 	GLFWmonitor* primaryMonitor;

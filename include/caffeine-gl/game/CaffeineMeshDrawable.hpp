@@ -9,7 +9,7 @@
 class CaffeineMeshDrawable final : public CaffeineDrawable {
 public:
 	CaffeineMeshDrawable(const Mesh &mesh, const Material &material);
-	void submitToRenderer(Renderer &renderer) override;
+	void submitToRenderer() override;
 
 	void move(const glm::vec2 &delta);
 	void scale(const glm::vec2 &factor);

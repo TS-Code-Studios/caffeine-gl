@@ -1,10 +1,11 @@
 #include <iostream>
 #include <caffeine-gl/gfx/Renderer.hpp>
 
-Renderer::Renderer(const float width, const float height) {
-	projectionMatrix = glm::ortho(0.0f, width, 0.0f, height, -1.0f, 1.0f);
-}
+std::vector<RenderingCommand> Renderer::renderingCommands;
 
+const float Renderer::virtualWidth = 1920.0f;
+const float Renderer::virtualHeight = 1080.0f;
+glm::mat4 Renderer::projectionMatrix = glm::ortho(0.0f, virtualWidth, 0.0f, virtualHeight, -1.0f, 1.0f);
 
 void Renderer::queueRenderingCommand(const Mesh &mesh, const Material &material, const Transform &transform) {
 	renderingCommands.push_back({ mesh, material, transform});

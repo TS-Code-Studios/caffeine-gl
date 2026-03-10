@@ -4,8 +4,8 @@
 CaffeineMeshDrawable::CaffeineMeshDrawable(const Mesh &mesh, const Material &material)
 	: mesh(&mesh), material(material), transform() {}
 
-void CaffeineMeshDrawable::submitToRenderer(Renderer &renderer) {
-	renderer.queueRenderingCommand(*mesh, material, this->transform);
+void CaffeineMeshDrawable::submitToRenderer() {
+	Renderer::queueRenderingCommand(*mesh, material, this->transform);
 }
 
 void CaffeineMeshDrawable::move(const glm::vec2 &delta) {

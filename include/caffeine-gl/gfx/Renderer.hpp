@@ -17,13 +17,14 @@ struct RenderingCommand {
 
 class Renderer {
 public:
-	std::vector<RenderingCommand> renderingCommands;
-	glm::mat4 projectionMatrix{};
+	static const float virtualWidth;
+	static const float virtualHeight;
 
-	Renderer(float width, float height);
+	static std::vector<RenderingCommand> renderingCommands;
+	static glm::mat4 projectionMatrix;
 
-	void queueRenderingCommand(const Mesh &mesh, const Material &material, const Transform &transform);
-	void renderAll();
+	static void queueRenderingCommand(const Mesh &mesh, const Material &material, const Transform &transform);
+	static void renderAll();
 };
 
 #endif //RENDERER_H

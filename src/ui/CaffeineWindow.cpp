@@ -1,5 +1,7 @@
 #include <caffeine-gl/ui/CaffeineWindow.hpp>
 
+#include "caffeine-gl/gfx/Renderer.hpp"
+
 
 CaffeineWindow::CaffeineWindow(const char* title) {
 	// GLFW initialization and basic setup
@@ -13,8 +15,8 @@ CaffeineWindow::CaffeineWindow(const char* title) {
 	this->primaryMonitor = glfwGetPrimaryMonitor();
 	this->videoMode = glfwGetVideoMode(primaryMonitor);
 
-	WIDTH = videoMode->width;
-	HEIGHT = videoMode->height;
+	windowWidth = videoMode->width;
+	windowHeight = videoMode->height;
 
 	// Set GLFW Anti-Aliasing samples to 4
 	glfwWindowHint(GLFW_SAMPLES, 4);
@@ -25,7 +27,7 @@ CaffeineWindow::CaffeineWindow(const char* title) {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	window = glfwCreateWindow(WIDTH, HEIGHT, title, primaryMonitor, nullptr);
+	window = glfwCreateWindow(windowWidth, windowHeight, title, primaryMonitor, nullptr);
 
 	if(window == nullptr) {
 		std::cerr << "Failed to create GLFW window" << std::endl;
@@ -55,7 +57,18 @@ void CaffeineWindow::createViewport() const {
 		exit(EXIT_FAILURE);
 	}
 
-	glViewport(0, 0, WIDTH, HEIGHT);
+	float scaleX = windowWidth  / 1920.0f;
+	float scaleY = windowHeight / 1080.0f;
+
+	float scale = std::min(scaleX, scaleY);
+
+	int viewportWidth  = static_cast<int>(1920 * scale);
+	int viewportHeight = static_cast<int>(1080 * scale);
+
+	int viewportX = (windowWidth  - viewportWidth)  / 2;
+	int viewportY = (windowHeight - viewportHeight) / 2;
+
+	glViewport(viewportX, viewportY, viewportWidth, viewportHeight);
 
 	// Enable blending
 	glEnable(GL_BLEND);
@@ -83,9 +96,20 @@ void errorCallback(int error_code, const char* description) {
 
 void framebufferSizeCallback(GLFWwindow* window, const int width, const int height) {
 	if(auto* thisWindow = static_cast<CaffeineWindow*>(glfwGetWindowUserPointer(window))) {
-		thisWindow->WIDTH = width;
-		thisWindow->HEIGHT = height;
-		glViewport(0, 0, width, height);
+		const float scaleX = width  / Renderer::virtualWidth;
+		const float scaleY = height / Renderer::virtualHeight;
+
+		const float scale = std::min(scaleX, scaleY);
+
+		const int viewportWidth  = static_cast<int>(Renderer::virtualWidth * scale);
+		const int viewportHeight = static_cast<int>(Renderer::virtualHeight * scale);
+
+		const int viewportX = (width  - viewportWidth)  / 2;
+		const int viewportY = (height - viewportHeight) / 2;
+
+		thisWindow->windowWidth = width;
+		thisWindow->windowHeight = height;
+		glViewport(viewportX, viewportY, viewportWidth, viewportHeight);
 	}
 }
 

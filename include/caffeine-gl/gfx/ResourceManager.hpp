@@ -47,7 +47,7 @@ public:
 		return ptr;
 	}
 
-	static void renderAllDrawables(Renderer &renderer);
+	static void renderAllDrawables();
 	static void clear();
 
 
