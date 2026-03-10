@@ -32,7 +32,7 @@ public:
 
 	// Factory function to create game objects of any subclass type, ensuring they are properly stored and managed by the ResourceManager
 	template<typename GameObjectSubclass, typename... Args>
-	static GameObjectSubclass* createGameObject(Args &&... args) {
+	static GameObjectSubclass* createGameObject(int layer, Args &&... args) {
 		static_assert(std::is_base_of_v<CaffeineGameObject, GameObjectSubclass>, "Subclass must derive from CaffeineGameObject");
 
 		auto object = std::make_unique<GameObjectSubclass>(std::forward<Args>(args)...);
@@ -40,9 +40,8 @@ public:
 		GameObjectSubclass* ptr = object.get();
 		gameObjects.push_back(std::move(object));
 
-		if constexpr (std::is_base_of_v<CaffeineDrawable, GameObjectSubclass>)
-		{
-			drawables.push_back(static_cast<CaffeineDrawable*>(ptr));
+		if constexpr (std::is_base_of_v<CaffeineDrawable, GameObjectSubclass>) {
+			drawableLayers[layer].push_back(static_cast<CaffeineDrawable*>(ptr));
 		}
 
 		return ptr;
@@ -67,7 +66,7 @@ private:
 	static std::filesystem::path resolveResourcePath(const std::filesystem::path& relativePath);
 
 	static std::vector<std::unique_ptr<CaffeineGameObject>> gameObjects;
-	static std::vector<CaffeineDrawable*> drawables;
+	static std::map<int, std::vector<CaffeineDrawable*>> drawableLayers;
 
 	static std::map<std::string, Shader> shaders;
 	static std::map<std::string, Texture> textures;
