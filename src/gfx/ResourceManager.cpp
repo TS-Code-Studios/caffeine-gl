@@ -16,7 +16,9 @@ std::map<std::string, Mesh> ResourceManager::meshes;
 
 void ResourceManager::renderAllDrawables(Renderer &renderer) {
     for (CaffeineDrawable* drawable : drawables) {
-        drawable->submitToRenderer(renderer);
+        if(drawable->visible) {
+            drawable->submitToRenderer(renderer);
+        }
     }
     renderer.renderAll();
 }

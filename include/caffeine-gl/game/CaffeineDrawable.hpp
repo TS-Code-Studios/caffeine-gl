@@ -6,6 +6,8 @@
 
 class CaffeineDrawable : public CaffeineGameObject {
 public:
+	bool visible = true;
+
 	~CaffeineDrawable() override = default;
 
 	virtual void submitToRenderer(Renderer& renderer) = 0;
