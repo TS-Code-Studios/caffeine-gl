@@ -8,6 +8,8 @@
 
 class CaffeineMeshDrawable final : public CaffeineDrawable {
 public:
+	Transform transform;
+
 	CaffeineMeshDrawable(const Mesh &mesh, const Material &material);
 	void submitToRenderer() override;
 
@@ -22,7 +24,6 @@ public:
 private:
 	const Mesh *mesh;
 	Material material;
-	Transform transform;
 };
 
 #endif //CAFFEINEMESHDRAWABLE_HPP
