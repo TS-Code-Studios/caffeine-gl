@@ -8,7 +8,12 @@
 
 class CaffeineWindow {
 public:
+	int windowPositionX, windowPositionY;
 	int windowWidth, windowHeight;
+	int framebufferWidth{}, framebufferHeight{};
+
+	bool fullscreen = false;
+
 	bool keys[1024]{}, processedKeys[1024]{};
 
 	GLFWmonitor* primaryMonitor;
@@ -24,6 +29,10 @@ public:
 
 	// Configuration functions
 	void setWindowTitle(const char* newTitle) const;
+
+	void enableFullscreen();
+	void disableFullscreen();
+	void toggleFullscreen();
 
 private:
 	GLFWwindow* window;

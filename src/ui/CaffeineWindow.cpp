@@ -22,18 +22,25 @@ CaffeineWindow::CaffeineWindow(const char* title) {
 	glfwWindowHint(GLFW_SAMPLES, 4);
 
 	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
+	#ifdef __APPLE__
+	glfwWindowHint(GLFW_COCOA_RETINA_FRAMEBUFFER, GL_TRUE);
+	#endif
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	window = glfwCreateWindow(windowWidth, windowHeight, title, primaryMonitor, nullptr);
+	window = glfwCreateWindow(windowWidth, windowHeight, title, nullptr, nullptr);
 
 	if(window == nullptr) {
 		std::cerr << "Failed to create GLFW window" << std::endl;
 		glfwTerminate();
 		exit(EXIT_FAILURE);
 	}
+
+	glfwGetWindowPos(window, &windowPositionX, &windowPositionY);
+	glfwGetWindowSize(window, &windowWidth, &windowHeight);
+	glfwGetFramebufferSize(window, &framebufferWidth, &framebufferHeight);
 
 	glfwSetWindowUserPointer(window, this);
 
@@ -57,16 +64,16 @@ void CaffeineWindow::createViewport() const {
 		exit(EXIT_FAILURE);
 	}
 
-	float scaleX = windowWidth  / 1920.0f;
-	float scaleY = windowHeight / 1080.0f;
+	const float scaleX = static_cast<float>(windowWidth) / 1920.0f;
+	const float scaleY = static_cast<float>(windowWidth) / 1080.0f;
 
-	float scale = std::min(scaleX, scaleY);
+	const float scale = std::min(scaleX, scaleY);
 
-	int viewportWidth  = static_cast<int>(1920 * scale);
-	int viewportHeight = static_cast<int>(1080 * scale);
+	const int viewportWidth  = static_cast<int>(1920 * scale);
+	const int viewportHeight = static_cast<int>(1080 * scale);
 
-	int viewportX = (windowWidth  - viewportWidth)  / 2;
-	int viewportY = (windowHeight - viewportHeight) / 2;
+	const int viewportX = (windowWidth  - viewportWidth)  / 2;
+	const int viewportY = (windowHeight - viewportHeight) / 2;
 
 	glViewport(viewportX, viewportY, viewportWidth, viewportHeight);
 
@@ -87,6 +94,28 @@ void CaffeineWindow::setWindowTitle(const char* newTitle) const {
 	glfwSetWindowTitle(window, newTitle);
 }
 
+void CaffeineWindow::enableFullscreen() {
+	if (!fullscreen) {
+		glfwSetWindowMonitor(window, primaryMonitor, 0, 0, videoMode->width, videoMode->height, videoMode->refreshRate);
+		fullscreen = true;
+	}
+}
+
+void CaffeineWindow::disableFullscreen() {
+	if (fullscreen) {
+		glfwSetWindowMonitor(window, nullptr, windowPositionX, windowPositionY, windowWidth, windowHeight, videoMode->refreshRate);
+		fullscreen = false;
+	}
+}
+
+void CaffeineWindow::toggleFullscreen() {
+	if (fullscreen) {
+		disableFullscreen();
+	} else {
+		enableFullscreen();
+	}
+}
+
 
 
 // GLFW callback functions
@@ -96,8 +125,8 @@ void errorCallback(int error_code, const char* description) {
 
 void framebufferSizeCallback(GLFWwindow* window, const int width, const int height) {
 	if(auto* thisWindow = static_cast<CaffeineWindow*>(glfwGetWindowUserPointer(window))) {
-		const float scaleX = width  / Renderer::virtualWidth;
-		const float scaleY = height / Renderer::virtualHeight;
+		const float scaleX = static_cast<float>(width)  / Renderer::virtualWidth;
+		const float scaleY = static_cast<float>(height) / Renderer::virtualHeight;
 
 		const float scale = std::min(scaleX, scaleY);
 
@@ -107,8 +136,8 @@ void framebufferSizeCallback(GLFWwindow* window, const int width, const int heig
 		const int viewportX = (width  - viewportWidth)  / 2;
 		const int viewportY = (height - viewportHeight) / 2;
 
-		thisWindow->windowWidth = width;
-		thisWindow->windowHeight = height;
+		thisWindow->framebufferWidth = width;
+		thisWindow->framebufferHeight = height;
 		glViewport(viewportX, viewportY, viewportWidth, viewportHeight);
 	}
 }
