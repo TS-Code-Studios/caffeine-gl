@@ -48,6 +48,11 @@ add_library(${PROJECT_NAME} STATIC
         include/caffeine-gl/gfx/Mesh.hpp
         include/caffeine-gl/gfx/Material.hpp
         src/game/CaffeineMeshDrawable.cpp
+        include/caffeine-gl/physics/CollisionSystem.hpp
+        src/physics/CollisionSystem.cpp
+        include/caffeine-gl/physics/Collider.hpp
+        include/caffeine-gl/physics/Hitbox.hpp
+        src/physics/Collider.cpp
 )
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
