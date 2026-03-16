@@ -8,8 +8,6 @@
 
 class CaffeineMeshDrawable final : public CaffeineDrawable {
 public:
-	Transform transform;
-
 	CaffeineMeshDrawable(const Mesh &mesh, const Material &material);
 	void submitToRenderer() override;
 

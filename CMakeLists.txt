@@ -51,7 +51,6 @@ add_library(${PROJECT_NAME} STATIC
         include/caffeine-gl/physics/CollisionSystem.hpp
         src/physics/CollisionSystem.cpp
         include/caffeine-gl/physics/Collider.hpp
-        include/caffeine-gl/physics/Hitbox.hpp
         src/physics/Collider.cpp
 )
 

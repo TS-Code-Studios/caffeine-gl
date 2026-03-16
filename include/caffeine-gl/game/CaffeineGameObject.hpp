@@ -3,12 +3,13 @@
 
 #include <caffeine-gl/game/Transform.hpp>
 
-#include "caffeine-gl/physics/Collider.hpp"
+// Can't include Collider.hpp here since it would be a circular dependency
+class Collider;
 
 class CaffeineGameObject {
 public:
 	Transform transform;
-	Collider collider;
+	Collider* collider;
 
 	virtual ~CaffeineGameObject() = default;
 

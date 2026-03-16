@@ -2,7 +2,7 @@
 #include <caffeine-gl/game/CaffeineMeshDrawable.hpp>
 
 CaffeineMeshDrawable::CaffeineMeshDrawable(const Mesh &mesh, const Material &material)
-	: mesh(&mesh), material(material), transform() {}
+	: mesh(&mesh), material(material) {}
 
 void CaffeineMeshDrawable::submitToRenderer() {
 	Renderer::queueRenderingCommand(*mesh, material, this->transform);

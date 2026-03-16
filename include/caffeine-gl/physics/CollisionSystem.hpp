@@ -1,5 +1,6 @@
 #ifndef COLLISIONSYSTEM_HPP
 #define COLLISIONSYSTEM_HPP
+
 #include "Collider.hpp"
 
 class CollisionSystem {
@@ -12,7 +13,7 @@ public:
 private:
 	static std::vector<Collider*> colliders;
 
-	static void checkCollision(Collider* a, Collider* b);
+	static void checkCollision(const Collider* a, const Collider* b);
 };
 
 #endif // COLLISIONSYSTEM_HPP
