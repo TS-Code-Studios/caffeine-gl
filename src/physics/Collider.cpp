@@ -18,7 +18,6 @@ Collider::Collider(CaffeineGameObject* parent, const ColliderType type, const gl
 AABB Collider::getWorldSpaceAABB() const {
 	AABB result{};
 
-	std::cout << "parent pos " << parent->transform.position.x << " " << parent->transform.position.y << std::endl;
 	result.min = glm::vec2(parent->transform.position + offset - size / 2.0f);
 	result.max = glm::vec2(parent->transform.position + offset + size / 2.0f);
 

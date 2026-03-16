@@ -8,7 +8,7 @@ public:
 	static void update(float deltaTime);
 
 	static void registerCollider(Collider* collider);
-	static void unregisterCollider(Collider* collider);
+	static void unregisterCollider(const Collider* collider);
 
 private:
 	static std::vector<Collider*> colliders;

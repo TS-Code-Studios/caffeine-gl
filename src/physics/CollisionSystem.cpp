@@ -14,7 +14,7 @@ void CollisionSystem::registerCollider(Collider *collider) {
 	colliders.push_back(collider);
 }
 
-void CollisionSystem::unregisterCollider(Collider *collider) {
+void CollisionSystem::unregisterCollider(const Collider *collider) {
 	for(size_t i = 0; i < colliders.size(); i++) {
 		if(colliders[i] == collider) {
 			colliders[i] = colliders.back();
@@ -37,7 +37,12 @@ void CollisionSystem::checkCollision(const Collider* a, const Collider* b) {
 	collisionY = a_max.y >= b_min.y && b_max.y >= a_min.y;
 
 	if(collisionX && collisionY) {
-		std::cout << "collision of" << a << b << std::endl;
+		if(a->collisionCallback) {
+			a->collisionCallback(*b->parent);
+		}
+		if(b->collisionCallback) {
+			b->collisionCallback(*a->parent);
+		}
 	}
 }
 

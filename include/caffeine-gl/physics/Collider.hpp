@@ -3,6 +3,8 @@
 
 #include <glm/glm.hpp>
 
+#include "caffeine-gl/game/CaffeineGameObject.hpp"
+
 struct AABB {
 	glm::vec2 min;
 	glm::vec2 max;
@@ -26,6 +28,8 @@ public:
 	glm::vec2 size{};
 
 	CaffeineGameObject* parent;
+
+	std::function<void(CaffeineGameObject&)> collisionCallback;
 
 	//Collider() = default;
 	Collider(CaffeineGameObject* parent, ColliderType type, glm::vec2 offset = glm::vec2(0.0f), glm::vec2 size = glm::vec2(1.0f));
