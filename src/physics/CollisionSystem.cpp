@@ -30,9 +30,6 @@ void CollisionSystem::checkCollision(const Collider* a, const Collider* b) {
 	auto [a_min, a_max] = a->getWorldSpaceAABB();
 	auto [b_min, b_max] = b->getWorldSpaceAABB();
 
-	std::cout << "x coords: " << a_min.x << " " << a_max.x << " " << b_min.x << " " << b_max.x << std::endl;
-	std::cout << "y coords: " << a_min.y << " " << a_max.y << " " << b_min.y << " " << b_max.y << std::endl;
-
 	bool collisionX = false;
 	bool collisionY = false;
 
