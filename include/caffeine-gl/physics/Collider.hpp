@@ -10,7 +10,11 @@ struct AABB {
 	glm::vec2 max;
 };
 
-enum class ColliderType {
+enum ColliderType {
+	STATIC,
+	DYNAMIC
+};
+enum ColliderShape {
 	QUAD,
 	CIRCLE
 };
@@ -21,6 +25,7 @@ class CaffeineGameObject;
 class Collider {
 public:
 	ColliderType type;
+	ColliderShape shape;
 
 	bool enabled = false;
 
@@ -32,7 +37,13 @@ public:
 	std::function<void(CaffeineGameObject&)> collisionCallback;
 
 	//Collider() = default;
-	Collider(CaffeineGameObject* parent, ColliderType type, glm::vec2 offset = glm::vec2(0.0f), glm::vec2 size = glm::vec2(1.0f));
+	Collider(
+		CaffeineGameObject* parent,
+		ColliderType type,
+		ColliderShape shape,
+		glm::vec2 offset = glm::vec2(0.0f),
+		glm::vec2 size = glm::vec2(1.0f)
+		);
 
 	[[nodiscard]] AABB getWorldSpaceAABB() const;
 

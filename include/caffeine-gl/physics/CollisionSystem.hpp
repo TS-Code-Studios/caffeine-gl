@@ -13,7 +13,7 @@ public:
 private:
 	static std::vector<Collider*> colliders;
 
-	static void checkCollision(const Collider* a, const Collider* b);
+	static bool checkCollision_AABB(AABB a, AABB b);
 };
 
 #endif // COLLISIONSYSTEM_HPP

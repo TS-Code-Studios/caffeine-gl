@@ -5,10 +5,11 @@
 
 #include <caffeine-gl/physics/CollisionSystem.hpp>
 
-Collider::Collider(CaffeineGameObject* parent, const ColliderType type, const glm::vec2 offset, const glm::vec2 size) {
+Collider::Collider(CaffeineGameObject* parent, const ColliderType type, const ColliderShape shape, const glm::vec2 offset, const glm::vec2 size) {
 	this->parent = parent;
 
 	this->type = type;
+	this->shape = shape;
 
 	this->offset = offset;
 	this->size = size;
