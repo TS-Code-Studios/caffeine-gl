@@ -9,6 +9,7 @@ set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
 add_subdirectory(external/glfw)
 add_subdirectory(external/glm)
+add_subdirectory(external/freetype)
 
 if(UNIX AND NOT APPLE)
     set(OpenGL_GL_PREFERENCE GLVND)
@@ -31,8 +32,6 @@ add_library(${PROJECT_NAME} STATIC
         include/caffeine-gl/gfx/ResourceManager.hpp
         src/gfx/Renderer.cpp
         include/caffeine-gl/gfx/Renderer.hpp
-        #src/gfx/ParticleGenerator.cpp
-        #include/caffeine-gl/gfx/ParticleGenerator.hpp
 
         include/caffeine-gl/ui/CaffeineWindow.hpp
         src/ui/CaffeineWindow.cpp
@@ -52,12 +51,15 @@ add_library(${PROJECT_NAME} STATIC
         src/physics/CollisionSystem.cpp
         include/caffeine-gl/physics/Collider.hpp
         src/physics/Collider.cpp
+        include/caffeine-gl/gfx/TextRenderer.hpp
+        src/gfx/TextRenderer.cpp
 )
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        #external/freetype/include
         $<INSTALL_INTERFACE:include>
 )
 
@@ -65,4 +67,5 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
         glfw
         glm::glm
         OpenGL::GL
+        freetype
 )

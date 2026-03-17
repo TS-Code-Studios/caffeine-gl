@@ -6,3 +6,6 @@
 	path = external/glfw
 	url = https://github.com/glfw/glfw.git
 	branch = master
+[submodule "external/freetype"]
+	path = external/freetype
+	url = https://gitlab.freedesktop.org/freetype/freetype.git
