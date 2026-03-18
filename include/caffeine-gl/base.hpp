@@ -8,6 +8,7 @@
 #include <caffeine-gl/game/CaffeineDrawable.hpp>
 #include <caffeine-gl/game/CaffeineMeshDrawable.hpp>
 #include <caffeine-gl/game/Transform.hpp>
+#include <caffeine-gl/game/CaffeineWorld.hpp>
 
 #include <caffeine-gl/gfx/Texture.hpp>
 #include <caffeine-gl/gfx/Shader.hpp>

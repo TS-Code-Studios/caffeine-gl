@@ -53,6 +53,11 @@ add_library(${PROJECT_NAME} STATIC
         src/physics/Collider.cpp
         include/caffeine-gl/gfx/TextRenderer.hpp
         src/gfx/TextRenderer.cpp
+        include/caffeine-gl/game/CaffeineWorld.hpp
+        src/game/CaffeineWorld.cpp
+        include/caffeine-gl/game/ComponentPoolInterface.hpp
+        include/caffeine-gl/game/ComponentPool.hpp
+        src/game/ComponentPool.cpp
 )
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
