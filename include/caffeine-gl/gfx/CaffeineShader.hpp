@@ -8,24 +8,24 @@
 #include <glm/gtc/type_ptr.hpp>
 
 
-class Shader {
+class CaffeineShader {
 public:
 	unsigned int ID;
 
-	Shader(): ID(0) {
+	CaffeineShader(): ID(0) {
 	} ;
 
-	~Shader();
+	~CaffeineShader();
 
-	Shader(const Shader&) = delete;
-	Shader& operator=(const Shader&) = delete;
+	CaffeineShader(const CaffeineShader&) = delete;
+	CaffeineShader& operator=(const CaffeineShader&) = delete;
 
-	Shader(Shader&& other) noexcept {
+	CaffeineShader(CaffeineShader&& other) noexcept {
 		ID = other.ID;
 		other.ID = 0;
 	}
 
-	Shader& operator=(Shader&& other) noexcept {
+	CaffeineShader& operator=(CaffeineShader&& other) noexcept {
 		if (this != &other) {
 			glDeleteProgram(ID);
 			ID = other.ID;

@@ -7,16 +7,25 @@
 #include <caffeine-gl/game/CaffeineGameObject.hpp>
 #include <caffeine-gl/game/CaffeineDrawable.hpp>
 #include <caffeine-gl/game/CaffeineMeshDrawable.hpp>
-#include <caffeine-gl/game/Transform.hpp>
-#include <caffeine-gl/game/CaffeineWorld.hpp>
 
-#include <caffeine-gl/gfx/Texture.hpp>
-#include <caffeine-gl/gfx/Shader.hpp>
+#include <caffeine-gl/components/CaffeineRenderComponent.hpp>
+#include <caffeine-gl/components/CaffeineTransformComponent.hpp>
+#include <caffeine-gl/components/CaffeineMeshComponent.hpp>
+#include <caffeine-gl/components/CaffeineMaterialComponent.hpp>
+
+#include <caffeine-gl/game/CaffeineWorld.hpp>
+#include <caffeine-gl/game/ComponentPool.hpp>
+#include <caffeine-gl/game/CaffeineEntity.hpp>
+
+#include <caffeine-gl/gfx/CaffeineTexture.hpp>
+#include <caffeine-gl/gfx/CaffeineShader.hpp>
 #include <caffeine-gl/gfx/ParticleGenerator.hpp>
 #include <caffeine-gl/gfx/ResourceManager.hpp>
-#include <caffeine-gl/gfx/Renderer.hpp>
-#include <caffeine-gl/gfx/Material.hpp>
-#include <caffeine-gl/gfx/Mesh.hpp>
+
+#include <caffeine-gl/systems/CaffeineRenderingSystem.hpp>
+
+#include <components/gfx/CaffeineMaterialComponent.hpp>
+#include <caffeine-gl/components/CaffeineMesh.hpp>
 
 #include <caffeine-gl/physics/CollisionSystem.hpp>
 #include <caffeine-gl/physics/Collider.hpp>

@@ -1,18 +1,18 @@
-#include <caffeine-gl/gfx/Shader.hpp>
+#include <caffeine-gl/gfx/CaffeineShader.hpp>
 
 #include <iostream>
 
 
-void Shader::activate() const {
+void CaffeineShader::activate() const {
     glUseProgram(this->ID);
 }
 
-Shader::~Shader() {
+CaffeineShader::~CaffeineShader() {
     glDeleteProgram(this->ID);
 }
 
 
-void Shader::compile(const char* vertexSource, const char* fragmentSource, const char* geometrySource) {
+void CaffeineShader::compile(const char* vertexSource, const char* fragmentSource, const char* geometrySource) {
     const unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader, 1, &vertexSource, nullptr);
     glCompileShader(vertexShader);
@@ -46,14 +46,14 @@ void Shader::compile(const char* vertexSource, const char* fragmentSource, const
     checkCompileErrors(this->ID, "PROGRAM");
 }
 
-void Shader::setFloat(const char *name, const float value, const bool activateShader) {
+void CaffeineShader::setFloat(const char *name, const float value, const bool activateShader) {
     if (activateShader) {
         this->activate();
     }
     glUniform1f(glGetUniformLocation(this->ID, name), value);
 }
 
-void Shader::setInteger(const char *name, const int value, const bool activateShader) {
+void CaffeineShader::setInteger(const char *name, const int value, const bool activateShader) {
     if (activateShader) {
         this->activate();
     }
@@ -61,7 +61,7 @@ void Shader::setInteger(const char *name, const int value, const bool activateSh
     glUniform1i(glGetUniformLocation(this->ID, name), value);
 }
 
-void Shader::setVector2f(const char *name, const float x, const float y, const bool activateShader) {
+void CaffeineShader::setVector2f(const char *name, const float x, const float y, const bool activateShader) {
     if (activateShader) {
         this->activate();
     }
@@ -69,7 +69,7 @@ void Shader::setVector2f(const char *name, const float x, const float y, const b
     glUniform2f(glGetUniformLocation(this->ID, name), x, y);
 }
 
-void Shader::setVector2f(const char *name, const glm::vec2 &value, const bool activateShader) {
+void CaffeineShader::setVector2f(const char *name, const glm::vec2 &value, const bool activateShader) {
     if (activateShader) {
         this->activate();
     }
@@ -77,7 +77,7 @@ void Shader::setVector2f(const char *name, const glm::vec2 &value, const bool ac
     glUniform2f(glGetUniformLocation(this->ID, name), value.x, value.y);
 }
 
-void Shader::setVector3f(const char *name, const float x, const float y, const float z, const bool activateShader) {
+void CaffeineShader::setVector3f(const char *name, const float x, const float y, const float z, const bool activateShader) {
     if (activateShader) {
         this->activate();
     }
@@ -85,13 +85,13 @@ void Shader::setVector3f(const char *name, const float x, const float y, const f
     glUniform3f(glGetUniformLocation(this->ID, name), x, y, z);
 }
 
-void Shader::setVector3f(const char *name, const glm::vec3 &value, const bool activateShader) {
+void CaffeineShader::setVector3f(const char *name, const glm::vec3 &value, const bool activateShader) {
     if (activateShader)
         this->activate();
     glUniform3f(glGetUniformLocation(this->ID, name), value.x, value.y, value.z);
 }
 
-void Shader::setVector4f(const char *name, const float x, const float y, const float z, const float w, const bool activateShader) {
+void CaffeineShader::setVector4f(const char *name, const float x, const float y, const float z, const float w, const bool activateShader) {
     if (activateShader) {
         this->activate();
     }
@@ -99,7 +99,7 @@ void Shader::setVector4f(const char *name, const float x, const float y, const f
     glUniform4f(glGetUniformLocation(this->ID, name), x, y, z, w);
 }
 
-void Shader::setVector4f(const char *name, const glm::vec4 &value, const bool activateShader) {
+void CaffeineShader::setVector4f(const char *name, const glm::vec4 &value, const bool activateShader) {
     if (activateShader) {
         this->activate();
     }
@@ -107,7 +107,7 @@ void Shader::setVector4f(const char *name, const glm::vec4 &value, const bool ac
     glUniform4f(glGetUniformLocation(this->ID, name), value.x, value.y, value.z, value.w);
 }
 
-void Shader::setMatrix4(const char *name, const glm::mat4 &matrix, const bool activateShader) {
+void CaffeineShader::setMatrix4(const char *name, const glm::mat4 &matrix, const bool activateShader) {
     if (activateShader) {
         this->activate();
     }
@@ -115,7 +115,7 @@ void Shader::setMatrix4(const char *name, const glm::mat4 &matrix, const bool ac
     glUniformMatrix4fv(glGetUniformLocation(this->ID, name), 1, false, glm::value_ptr(matrix));
 }
 
-void Shader::checkCompileErrors(const unsigned int object, const std::string& type) {
+void CaffeineShader::checkCompileErrors(const unsigned int object, const std::string& type) {
     int success;
     char infoLog[1024];
     if (type != "PROGRAM") {

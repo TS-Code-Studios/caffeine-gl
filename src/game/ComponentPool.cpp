@@ -1,7 +1,7 @@
 #include <caffeine-gl/game/ComponentPool.hpp>
 
-template<typename pooledComponentType>
-void ComponentPool<pooledComponentType>::add(const Entity entity, pooledComponentType component) {
+template<typename PooledComponentType>
+void ComponentPool<PooledComponentType>::add(const CaffeineEntity entity, PooledComponentType component) {
 	// Map entity to next free index of data array (since size = last index + 1)
 	entityToIndex[entity] = data.size();
 
@@ -9,22 +9,22 @@ void ComponentPool<pooledComponentType>::add(const Entity entity, pooledComponen
 	data.push_back(component);
 }
 
-template<typename pooledComponentType>
-pooledComponentType& ComponentPool<pooledComponentType>::get(const Entity entity) {
+template<typename PooledComponentType>
+PooledComponentType& ComponentPool<PooledComponentType>::get(const CaffeineEntity entity) {
 	return data[entityToIndex[entity]];
 }
 
-template<typename pooledComponentType>
-bool ComponentPool<pooledComponentType>::has(const Entity entity) {
+template<typename PooledComponentType>
+bool ComponentPool<PooledComponentType>::has(const CaffeineEntity entity) {
 	return entityToIndex.find(entity) != entityToIndex.end();
 }
 
-template<typename pooledComponentType>
-void ComponentPool<pooledComponentType>::remove(const Entity entity) {
-	auto entry = entityToIndex.find(entity);
+template<typename PooledComponentType>
+void ComponentPool<PooledComponentType>::remove(const CaffeineEntity entity) {
+	const auto entry = entityToIndex.find(entity);
 	if(entry == entityToIndex.end()) return;
 
-	size_t index = it->second;
+	size_t index = entry->second;
 	size_t lastIndex = data.size() - 1;
 
 	// Overwrite the entries that should be deleted with the ones at the end of the arrays

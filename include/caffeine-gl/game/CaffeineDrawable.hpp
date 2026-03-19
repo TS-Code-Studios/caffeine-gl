@@ -2,7 +2,7 @@
 #define CAFFEINEDRAWABLE_HPP
 
 #include <caffeine-gl/game/CaffeineGameObject.hpp>
-#include <caffeine-gl/gfx/Renderer.hpp>
+#include <../systems/Renderer.hpp>
 
 class CaffeineDrawable : public CaffeineGameObject {
 public:

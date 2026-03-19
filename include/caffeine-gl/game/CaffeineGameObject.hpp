@@ -1,14 +1,14 @@
 #ifndef CAFFEINEGAMEOBJECT_H
 #define CAFFEINEGAMEOBJECT_H
 
-#include <caffeine-gl/game/Transform.hpp>
+#include <caffeine-gl/components/CaffeineTransformComponent.hpp>
 
 // Can't include Collider.hpp here since it would be a circular dependency
 class Collider;
 
 class CaffeineGameObject {
 public:
-	Transform transform;
+	CaffeineTransformComponent transform;
 	Collider* collider;
 
 	virtual ~CaffeineGameObject() = default;

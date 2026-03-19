@@ -1,13 +1,12 @@
 #ifndef COMPONENTPOOLINTERFACE_HPP
 #define COMPONENTPOOLINTERFACE_HPP
 
-#include <cstdint>
-
-using Entity = uint32_t;
+#include <caffeine-gl/game/CaffeineEntity.hpp>
 
 class ComponentPoolInterface {
+public:
 	virtual ~ComponentPoolInterface() = default;
-	virtual void remove(Entity entity);
+	virtual void remove(CaffeineEntity entity);
 };
 
 #endif //COMPONENTPOOLINTERFACE_HPP

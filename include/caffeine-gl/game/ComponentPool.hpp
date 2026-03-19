@@ -6,17 +6,17 @@
 
 #include <caffeine-gl/game/ComponentPoolInterface.hpp>
 
-template<typename pooledComponentType>
+template<typename PooledComponentType>
 class ComponentPool final : public ComponentPoolInterface {
 public:
-	std::vector<pooledComponentType> data;
-	std::vector<Entity> entities;
-	std::unordered_map<Entity, size_t> entityToIndex;
+	std::vector<PooledComponentType> data;
+	std::vector<CaffeineEntity> entities;
+	std::unordered_map<CaffeineEntity, size_t> entityToIndex;
 
-	void add(Entity entity, pooledComponentType component);
-	pooledComponentType& get(Entity entity);
-	bool has(Entity entity);
-	void remove(Entity entity) override;
+	void add(CaffeineEntity entity, PooledComponentType component);
+	PooledComponentType& get(CaffeineEntity entity);
+	bool has(CaffeineEntity entity);
+	void remove(CaffeineEntity entity) override;
 };
 
 #endif //COMPONENTPOOL_HPP

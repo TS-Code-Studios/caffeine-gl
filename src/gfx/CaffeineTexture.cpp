@@ -1,21 +1,21 @@
-#include <caffeine-gl/gfx/Texture.hpp>
+#include <caffeine-gl/gfx/CaffeineTexture.hpp>
 
 #include <iostream>
 
 #include <glad/glad.h>
 
-Texture::Texture()
+CaffeineTexture::CaffeineTexture()
 	: width(0), height(0), format_INTERNAL(GL_RGB), format_IMAGE(GL_RGB), wrap_S(GL_REPEAT), wrap_T(GL_REPEAT), filter_MIN(GL_LINEAR), filter_MAX(GL_LINEAR) {
 	glGenTextures(1, &this->ID);
 }
 
 
-Texture::~Texture() {
+CaffeineTexture::~CaffeineTexture() {
 	glDeleteTextures(1, &this->ID);
 }
 
 
-void Texture::generate(const unsigned int width, const unsigned int height, const unsigned char* data) {
+void CaffeineTexture::generate(const unsigned int width, const unsigned int height, const unsigned char* data) {
 	this->width = static_cast<GLsizei>(width);
 	this->height = static_cast<GLsizei>(height);
 
@@ -31,6 +31,6 @@ void Texture::generate(const unsigned int width, const unsigned int height, cons
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Texture::bind() const {
+void CaffeineTexture::bind() const {
 	glBindTexture(GL_TEXTURE_2D, this->ID);
 }

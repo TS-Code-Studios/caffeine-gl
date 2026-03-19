@@ -1,8 +1,8 @@
 #ifndef CAFFEINEMESHDRAWABLE_HPP
 #define CAFFEINEMESHDRAWABLE_HPP
 
-#include <caffeine-gl/gfx/Mesh.hpp>
-#include <caffeine-gl/gfx/Material.hpp>
+#include <caffeine-gl/components/Mesh.hpp>
+#include <caffeine-gl/components/Material.hpp>
 
 #include <caffeine-gl/game/CaffeineDrawable.hpp>
 

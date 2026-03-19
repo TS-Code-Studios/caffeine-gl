@@ -15,13 +15,13 @@
 #endif
 
 
-#include <caffeine-gl/gfx/Shader.hpp>
-#include <caffeine-gl/gfx/Texture.hpp>
+#include <caffeine-gl/gfx/CaffeineShader.hpp>
+#include <caffeine-gl/gfx/CaffeineTexture.hpp>
 
 #include <caffeine-gl/game/CaffeineGameObject.hpp>
 
-#include "Mesh.hpp"
-#include "caffeine-gl/game/CaffeineMeshDrawable.hpp"
+#include <caffeine-gl/gfx/CaffeineMesh.hpp>
+//#include "caffeine-gl/game/CaffeineMeshDrawable.hpp"
 
 
 class ResourceManager {
@@ -51,15 +51,15 @@ public:
 	static void clear();
 
 
-	static Shader& loadShader(const char *vertexShaderPath, const char *fragmentShaderPath, const char *geometryShaderPath, const std::string &name);
-	static Shader& getShader(const std::string& name);
+	static CaffeineShader& loadShader(const char *vertexShaderPath, const char *fragmentShaderPath, const char *geometryShaderPath, const std::string &name);
+	static CaffeineShader& getShader(const std::string& name);
 
-	static Texture& loadTexture(const char *file, const std::string& name);
-	static Texture& getTexture(const std::string &name);
+	static CaffeineTexture& loadTexture(const char *file, const std::string& name);
+	static CaffeineTexture& getTexture(const std::string &name);
 
 	static void createDefaultMeshes();
-	static Mesh& loadMesh(const std::vector<Vertex2D> &vertices, const std::vector<uint32_t> &indices, const std::string& name);
-	static Mesh& getMesh(const std::string &name);
+	static CaffeineMesh& loadMesh(const std::vector<Vertex2D> &vertices, const std::vector<uint32_t> &indices, const std::string& name);
+	static CaffeineMesh& getMesh(const std::string &name);
 
 private:
 	static std::filesystem::path resourceRoot;
@@ -68,13 +68,13 @@ private:
 	static std::vector<std::unique_ptr<CaffeineGameObject>> gameObjects;
 	static std::map<int, std::vector<CaffeineDrawable*>> drawableLayers;
 
-	static std::map<std::string, Shader> shaders;
-	static std::map<std::string, Texture> textures;
-	static std::map<std::string, Mesh> meshes;
+	static std::map<std::string, CaffeineShader> shaders;
+	static std::map<std::string, CaffeineTexture> textures;
+	static std::map<std::string, CaffeineMesh> meshes;
 
-	static Shader createShaderProgram(const char *vertexShaderPath, const char *fragmentShaderPath, const char *geometryShaderPath = nullptr);
+	static CaffeineShader createShaderProgram(const char *vertexShaderPath, const char *fragmentShaderPath, const char *geometryShaderPath = nullptr);
 	static std::string loadShaderCodeFromFile(const std::filesystem::path& path);
-	static Texture loadTextureFromFile(const char *path);
+	static CaffeineTexture loadTextureFromFile(const char *path);
 };
 
 #endif //RESOURCEMANAGER_H

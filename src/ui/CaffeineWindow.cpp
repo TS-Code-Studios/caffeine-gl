@@ -1,6 +1,6 @@
 #include <caffeine-gl/ui/CaffeineWindow.hpp>
 
-#include "caffeine-gl/gfx/Renderer.hpp"
+#include "../../include/caffeine-gl/systems/CaffeineRenderingSystem.hpp"
 
 
 CaffeineWindow::CaffeineWindow(const char* title) {
@@ -125,13 +125,13 @@ void errorCallback(int error_code, const char* description) {
 
 void framebufferSizeCallback(GLFWwindow* window, const int width, const int height) {
 	if(auto* thisWindow = static_cast<CaffeineWindow*>(glfwGetWindowUserPointer(window))) {
-		const float scaleX = static_cast<float>(width)  / Renderer::virtualWidth;
-		const float scaleY = static_cast<float>(height) / Renderer::virtualHeight;
+		const float scaleX = static_cast<float>(width)  / CaffeineRenderingSystem::virtualWidth;
+		const float scaleY = static_cast<float>(height) / CaffeineRenderingSystem::virtualHeight;
 
 		const float scale = std::min(scaleX, scaleY);
 
-		const int viewportWidth  = static_cast<int>(Renderer::virtualWidth * scale);
-		const int viewportHeight = static_cast<int>(Renderer::virtualHeight * scale);
+		const int viewportWidth  = static_cast<int>(CaffeineRenderingSystem::virtualWidth * scale);
+		const int viewportHeight = static_cast<int>(CaffeineRenderingSystem::virtualHeight * scale);
 
 		const int viewportX = (width  - viewportWidth)  / 2;
 		const int viewportY = (height - viewportHeight) / 2;

@@ -24,28 +24,28 @@ add_library(${PROJECT_NAME} STATIC
 
         include/caffeine-gl/game/CaffeineGameObject.hpp
 
-        src/gfx/Shader.cpp
-        include/caffeine-gl/gfx/Shader.hpp
-        src/gfx/Texture.cpp
-        include/caffeine-gl/gfx/Texture.hpp
+        src/gfx/CaffeineShader.cpp
+        include/caffeine-gl/gfx/CaffeineShader.hpp
+        src/gfx/CaffeineTexture.cpp
+        include/caffeine-gl/gfx/CaffeineTexture.hpp
         src/gfx/ResourceManager.cpp
         include/caffeine-gl/gfx/ResourceManager.hpp
-        src/gfx/Renderer.cpp
-        include/caffeine-gl/gfx/Renderer.hpp
+        src/systems/CaffeineRenderingSystem.cpp
+        include/caffeine-gl/systems/CaffeineRenderingSystem.hpp
 
         include/caffeine-gl/ui/CaffeineWindow.hpp
         src/ui/CaffeineWindow.cpp
 
         src/glad.c
         src/gfx/stb.cpp
-        include/caffeine-gl/game/CaffeineDrawable.hpp
-        include/caffeine-gl/game/CaffeineMeshDrawable.hpp
+        #include/caffeine-gl/game/CaffeineDrawable.hpp
+        #include/caffeine-gl/game/CaffeineMeshDrawable.hpp
         include/caffeine-gl/game/CaffeineText.hpp
         include/caffeine-gl/game/CaffeineParticleGenerator.hpp
-        include/caffeine-gl/game/Transform.hpp
-        src/game/Transform.cpp
-        include/caffeine-gl/gfx/Mesh.hpp
-        include/caffeine-gl/gfx/Material.hpp
+        include/caffeine-gl/components/CaffeineTransformComponent.hpp
+        src/components/CaffeineTransformComponent.cpp
+        include/caffeine-gl/gfx/CaffeineMesh.hpp
+        include/caffeine-gl/components/CaffeineMaterialComponent.hpp
         src/game/CaffeineMeshDrawable.cpp
         include/caffeine-gl/physics/CollisionSystem.hpp
         src/physics/CollisionSystem.cpp
@@ -58,6 +58,10 @@ add_library(${PROJECT_NAME} STATIC
         include/caffeine-gl/game/ComponentPoolInterface.hpp
         include/caffeine-gl/game/ComponentPool.hpp
         src/game/ComponentPool.cpp
+        include/caffeine-gl/components/CaffeineMeshComponent.hpp
+        include/caffeine-gl/game/CaffeineEntity.hpp
+        include/caffeine-gl/gfx/CaffeineMaterial.hpp
+        include/caffeine-gl/components/CaffeineRenderComponent.hpp
 )
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)

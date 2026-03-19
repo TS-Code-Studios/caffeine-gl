@@ -1,13 +1,13 @@
-#include <caffeine-gl/game/Transform.hpp>
+#include <caffeine-gl/components/CaffeineTransformComponent.hpp>
 
-Transform::Transform(glm::vec2 position, float rotation, glm::vec2 scale) {
+CaffeineTransformComponent::CaffeineTransformComponent(const glm::vec2 position, const float rotation, const glm::vec2 size) {
 	this->position = position;
 	this->rotation = rotation;
-	this->size = scale;
+	this->size = size;
 }
 
 
-glm::mat4 Transform::getModelMatrix() const {
+glm::mat4 CaffeineTransformComponent::getModelMatrix() const {
 	auto modelMatrix = glm::mat4(1.0f);
 
 	// Apply transformations in the order: scale, rotate, translate

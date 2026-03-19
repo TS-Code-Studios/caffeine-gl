@@ -1,19 +1,40 @@
 #ifndef CAFFEINEWORLD_HPP
 #define CAFFEINEWORLD_HPP
 
-#include <cstdint>
+#include <memory>
+#include <typeindex>
+#include <unordered_map>
 #include <vector>
 
-using Entity = uint32_t;
+#include <caffeine-gl/game/CaffeineEntity.hpp>
+#include <caffeine-gl/game/ComponentPool.hpp>
 
 class CaffeineWorld {
-	Entity nextFreeID = 0;
-	std::vector<Entity> availableIDList;
+public:
+	CaffeineEntity nextFreeID = 0;
+	std::vector<CaffeineEntity> availableIDList;
 
-	Entity createEntity();
-	void destroyEntity(Entity entity);
+	std::unordered_map<std::type_index, std::unique_ptr<ComponentPoolInterface>> componentPools;
 
-	void removeAllComponentsFromEntity(Entity entity);
+	CaffeineWorld() = default;
+
+	CaffeineEntity createEntity();
+	void destroyEntity(CaffeineEntity entity);
+
+	template<typename PooledComponentType>
+	void addComponent(CaffeineEntity entity, PooledComponentType component);
+	template<typename PooledComponentType>
+	PooledComponentType& getComponent(CaffeineEntity entity);
+	template<typename PooledComponentType>
+	bool hasComponent(CaffeineEntity entity);
+	template<typename PooledComponentType>
+	void removeComponent(CaffeineEntity entity);
+
+	void removeAllComponentsFromEntity(CaffeineEntity entity);
+
+
+	template<typename PooledComponentType>
+	ComponentPool<PooledComponentType>& getPool();
 };
 
 #endif //CAFFEINEWORLD_HPP

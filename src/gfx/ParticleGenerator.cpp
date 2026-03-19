@@ -123,7 +123,7 @@ void ParticleGenerator::SetTexture(const Texture &texture) {
 	this->texture = texture;
 }
 
-void ParticleGenerator::SetShader(const Shader shader) {
+void ParticleGenerator::SetShader(const CaffeineShader shader) {
 	this->shader = shader;
 }
 

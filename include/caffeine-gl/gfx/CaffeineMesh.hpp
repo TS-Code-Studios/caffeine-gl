@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "glad/glad.h"
+#include <glad/glad.h>
 
 struct Vertex2D {
 	float x, y;
@@ -11,19 +11,19 @@ struct Vertex2D {
 	float r, g, b, a;
 };
 
-struct Mesh {
+struct CaffeineMesh {
 	GLuint vao = 0;
 	GLuint vbo = 0;
 	GLuint ebo = 0;
 
 	uint32_t indexCount = 0;
 
-	Mesh() = default;
+	CaffeineMesh() = default;
 
-	Mesh(const Mesh&) = delete;
-	Mesh& operator=(const Mesh&) = delete;
+	CaffeineMesh(const CaffeineMesh&) = delete;
+	CaffeineMesh& operator=(const CaffeineMesh&) = delete;
 
-	Mesh(Mesh&& other) noexcept {
+	CaffeineMesh(CaffeineMesh&& other) noexcept {
 		vao = other.vao;
 		vbo = other.vbo;
 		ebo = other.ebo;
@@ -34,7 +34,7 @@ struct Mesh {
 		other.ebo = 0;
 	}
 
-	Mesh& operator=(Mesh&& other) noexcept {
+	CaffeineMesh& operator=(CaffeineMesh&& other) noexcept {
 		vao = other.vao;
 		vbo = other.vbo;
 		ebo = other.ebo;
@@ -46,17 +46,24 @@ struct Mesh {
 		return *this;
 	}
 
-	Mesh(const std::vector<Vertex2D> &vertices, const std::vector<uint32_t> &indices) {
+	CaffeineMesh(const std::vector<Vertex2D> &vertices, const std::vector<uint32_t> &indices) {
 		bufferData(vertices, indices);
 	}
 
-	~Mesh() {
+	~CaffeineMesh() {
 		glDeleteVertexArrays(1, &vao);
 		glDeleteBuffers(1, &vbo);
 		glDeleteBuffers(1, &ebo);
 	}
 
 	void bufferData(const std::vector<Vertex2D> &vertices, const std::vector<uint32_t> &indices) {
+		// If buffers have been created before, delete old buffers before creating new ones to avoid GPU memory leaks
+		if (vao != 0) {
+			glDeleteVertexArrays(1, &vao);
+			glDeleteBuffers(1, &vbo);
+			glDeleteBuffers(1, &ebo);
+		}
+
 		indexCount = static_cast<uint32_t>(indices.size());
 
 		glGenVertexArrays(1, &vao);

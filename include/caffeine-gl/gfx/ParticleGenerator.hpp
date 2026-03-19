@@ -4,8 +4,8 @@
 #include <vector>
 #include <glm/glm.hpp>
 
-#include <caffeine-gl/gfx/Shader.hpp>
-#include <caffeine-gl/gfx/Texture.hpp>
+#include <caffeine-gl/gfx/CaffeineShader.hpp>
+#include <caffeine-gl/gfx/CaffeineTexture.hpp>
 
 #include <caffeine-gl/game/CaffeineGameObject.hpp>
 
@@ -21,8 +21,8 @@ class ParticleGenerator {
 public:
 	ParticleGenerator(unsigned int amount);
 
-	void SetTexture(const Texture &texture);
-	void SetShader(Shader shader);
+	void SetTexture(const CaffeineTexture &texture);
+	void SetShader(CaffeineShader shader);
 
 	void SetLifetime(float lifetime);
 	void SetPositionSpread(int positionSpread);
@@ -39,8 +39,8 @@ private:
 	glm::vec2 offset;
 	int positionSpread;
 
-	Shader shader;
-	Texture texture;
+	CaffeineShader shader;
+	CaffeineTexture texture;
 	unsigned int VAO{};
 
 	void init();

@@ -10,9 +10,9 @@ std::filesystem::path ResourceManager::resourceRoot;
 std::vector<std::unique_ptr<CaffeineGameObject>> ResourceManager::gameObjects;
 std::map<int, std::vector<CaffeineDrawable*>> ResourceManager::drawableLayers;
 
-std::map<std::string, Texture> ResourceManager::textures;
-std::map<std::string, Shader> ResourceManager::shaders;
-std::map<std::string, Mesh> ResourceManager::meshes;
+std::map<std::string, CaffeineTexture> ResourceManager::textures;
+std::map<std::string, CaffeineShader> ResourceManager::shaders;
+std::map<std::string, CaffeineMesh> ResourceManager::meshes;
 
 void ResourceManager::renderAllDrawables() {
     for(auto& [layer, drawableArray] : drawableLayers) {
@@ -91,20 +91,20 @@ std::filesystem::path ResourceManager::resolveResourcePath(const std::filesystem
 
 
 // Shader management functions
-Shader& ResourceManager::loadShader(const char *vertexShaderPath, const char *fragmentShaderPath, const char *geometryShaderPath, const std::string &name) {
+CaffeineShader& ResourceManager::loadShader(const char *vertexShaderPath, const char *fragmentShaderPath, const char *geometryShaderPath, const std::string &name) {
     shaders.emplace(name, createShaderProgram(vertexShaderPath, fragmentShaderPath, geometryShaderPath));
     return shaders.at(name);
 }
-Shader& ResourceManager::getShader(const std::string& name) {
+CaffeineShader& ResourceManager::getShader(const std::string& name) {
     return shaders.at(name);
 }
 
 // Texture management functions
-Texture& ResourceManager::loadTexture(const char *file, const std::string& name) {
+CaffeineTexture& ResourceManager::loadTexture(const char *file, const std::string& name) {
     textures.emplace(name, loadTextureFromFile(file));
     return textures.at(name);
 }
-Texture& ResourceManager::getTexture(const std::string &name) {
+CaffeineTexture& ResourceManager::getTexture(const std::string &name) {
     return textures.at(name);
 }
 
@@ -120,18 +120,18 @@ void ResourceManager::createDefaultMeshes() {
 
     loadMesh(quadVertices, quadIndices, "quad");
 }
-Mesh& ResourceManager::loadMesh(const std::vector<Vertex2D> &vertices, const std::vector<uint32_t> &indices, const std::string &name) {
+CaffeineMesh& ResourceManager::loadMesh(const std::vector<Vertex2D> &vertices, const std::vector<uint32_t> &indices, const std::string &name) {
     meshes.try_emplace(name, vertices, indices);
     return meshes.at(name);
 }
-Mesh& ResourceManager::getMesh(const std::string &name) {
+CaffeineMesh& ResourceManager::getMesh(const std::string &name) {
     return meshes.at(name);
 }
 
 
 // Internal functions for loading shader code and texture data from files
 
-Shader ResourceManager::createShaderProgram(const char *vertexShaderPath, const char *fragmentShaderPath, const char *geometryShaderPath) {
+CaffeineShader ResourceManager::createShaderProgram(const char *vertexShaderPath, const char *fragmentShaderPath, const char *geometryShaderPath) {
     std::string vertexShaderCode;
     std::string fragmentShaderCode;
     std::string geometryShaderCode;
@@ -155,7 +155,7 @@ Shader ResourceManager::createShaderProgram(const char *vertexShaderPath, const 
         throw;
     }
 
-    Shader shader;
+    CaffeineShader shader;
 
     // Only pass geometry shader code if a path was provided
     shader.compile(vertexShaderCode.c_str(), fragmentShaderCode.c_str(), geometryShaderPath != nullptr ? geometryShaderCode.c_str() : nullptr);
@@ -178,10 +178,10 @@ std::string ResourceManager::loadShaderCodeFromFile(const std::filesystem::path&
 }
 
 
-Texture ResourceManager::loadTextureFromFile(const char *path) {
+CaffeineTexture ResourceManager::loadTextureFromFile(const char *path) {
     std::string resolvedPath = resolveResourcePath(path).string();
 
-    Texture texture;
+    CaffeineTexture texture;
 
     int width, height, nrChannels;
     stbi_set_flip_vertically_on_load(true);

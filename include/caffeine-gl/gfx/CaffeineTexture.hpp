@@ -2,7 +2,7 @@
 #define TEXTURE_H
 #include "glad/glad.h"
 
-class Texture {
+class CaffeineTexture {
 public:
 	unsigned int ID{};
 
@@ -12,17 +12,17 @@ public:
 	GLint wrap_S, wrap_T;
 	GLint filter_MIN, filter_MAX;
 
-	Texture();
-	~Texture();
-	Texture(const Texture&) = delete;
-	Texture& operator=(const Texture&) = delete;
+	CaffeineTexture();
+	~CaffeineTexture();
+	CaffeineTexture(const CaffeineTexture&) = delete;
+	CaffeineTexture& operator=(const CaffeineTexture&) = delete;
 
-	Texture(Texture&& other) noexcept {
+	CaffeineTexture(CaffeineTexture&& other) noexcept {
 		ID = other.ID;
 		other.ID = 0;
 	}
 
-	Texture& operator=(Texture&& other) noexcept {
+	CaffeineTexture& operator=(CaffeineTexture&& other) noexcept {
 		if (this != &other) {
 			glDeleteTextures(1, &ID);
 			ID = other.ID;
