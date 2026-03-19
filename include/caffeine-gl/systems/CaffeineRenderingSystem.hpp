@@ -8,15 +8,17 @@
 #include <caffeine-gl/components/CaffeineTransformComponent.hpp>
 
 struct RenderingCommand {
+	int layer;
+
 	const CaffeineMesh* mesh;
-	const CaffeineMaterial* material;
-	const CaffeineTransformComponent& transform;
+	const CaffeineMaterialComponent* material;
+	const CaffeineTransformComponent* transform;
 };
 
 class CaffeineRenderingSystem {
 public:
-	const float virtualWidth = 1920.0f;
-	const float virtualHeight = 1080.0f;
+	static constexpr float virtualWidth = 1920.0f;
+	static constexpr float virtualHeight = 1080.0f;
 	glm::mat4 projectionMatrix = glm::ortho(0.0f, virtualWidth, 0.0f, virtualHeight, -1.0f, 1.0f);;
 
 	void update(CaffeineWorld& world);

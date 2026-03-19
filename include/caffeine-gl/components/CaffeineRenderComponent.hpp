@@ -2,6 +2,7 @@
 #define CAFFEINERENDERCOMPONENT_HPP
 
 struct CaffeineRenderComponent {
+	int layer = 0;
 	bool visible = true;
 };
 

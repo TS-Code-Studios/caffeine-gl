@@ -17,26 +17,6 @@ void CaffeineWorld::destroyEntity(const CaffeineEntity entity) {
 	availableIDList.push_back(entity);
 }
 
-template<typename PooledComponentType>
-void CaffeineWorld::addComponent(CaffeineEntity entity, PooledComponentType component) {
-	getPool<PooledComponentType>().add(entity, component);
-}
-
-template<typename PooledComponentType>
-PooledComponentType& CaffeineWorld::getComponent(CaffeineEntity entity) {
-	return getPool<PooledComponentType>().get(entity);
-}
-
-template<typename PooledComponentType>
-bool CaffeineWorld::hasComponent(CaffeineEntity entity) {
-	return getPool<PooledComponentType>().has(entity);
-}
-
-template<typename PooledComponentType>
-void CaffeineWorld::removeComponent(CaffeineEntity entity) {
-	getPool<PooledComponentType>().remove(entity);
-}
-
 void CaffeineWorld::removeAllComponentsFromEntity(const CaffeineEntity entity) {
 	for(auto& [type, pool] : componentPools) {
 		pool->remove(entity);
@@ -44,13 +24,14 @@ void CaffeineWorld::removeAllComponentsFromEntity(const CaffeineEntity entity) {
 }
 
 
-template<typename PooledComponentType>
-ComponentPool<PooledComponentType> &CaffeineWorld::getPool() {
-	const std::type_index type = typeid(PooledComponentType);
 
-	if(componentPools.find(type) == componentPools.end()) {
-		componentPools[type] = std::make_unique<ComponentPool<PooledComponentType>>();
+void CaffeineWorld::clear() {
+	nextFreeID = 0;
+	availableIDList.clear();
+
+	for(auto& [type, pool] : componentPools) {
+		pool.reset();
 	}
 
-	return *static_cast<ComponentPool<PooledComponentType>*>(componentPools[type].get());
+	componentPools.clear();
 }

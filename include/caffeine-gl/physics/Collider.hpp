@@ -3,7 +3,6 @@
 
 #include <glm/glm.hpp>
 
-#include "caffeine-gl/game/CaffeineGameObject.hpp"
 
 struct AABB {
 	glm::vec2 min;

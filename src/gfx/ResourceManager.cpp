@@ -7,35 +7,12 @@
 
 std::filesystem::path ResourceManager::resourceRoot;
 
-std::vector<std::unique_ptr<CaffeineGameObject>> ResourceManager::gameObjects;
-std::map<int, std::vector<CaffeineDrawable*>> ResourceManager::drawableLayers;
-
 std::map<std::string, CaffeineTexture> ResourceManager::textures;
 std::map<std::string, CaffeineShader> ResourceManager::shaders;
 std::map<std::string, CaffeineMesh> ResourceManager::meshes;
 
-void ResourceManager::renderAllDrawables() {
-    for(auto& [layer, drawableArray] : drawableLayers) {
-        for (CaffeineDrawable* drawable : drawableArray) {
-            if(drawable->visible) {
-                drawable->submitToRenderer();
-            }
-        }
-    }
-    Renderer::renderAll();
-}
-
-// Free all loaded resources
+// Unload all resources
 void ResourceManager::clear() {
-    gameObjects.clear();
-
-    for(auto& [layer, drawableArray] : drawableLayers) {
-        for(const CaffeineDrawable* drawable : drawableArray) {
-            delete drawable;
-        }
-    }
-    drawableLayers.clear();
-
     shaders.clear();
     textures.clear();
     meshes.clear();

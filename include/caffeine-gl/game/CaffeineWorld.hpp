@@ -21,20 +21,40 @@ public:
 	CaffeineEntity createEntity();
 	void destroyEntity(CaffeineEntity entity);
 
-	template<typename PooledComponentType>
-	void addComponent(CaffeineEntity entity, PooledComponentType component);
-	template<typename PooledComponentType>
-	PooledComponentType& getComponent(CaffeineEntity entity);
-	template<typename PooledComponentType>
-	bool hasComponent(CaffeineEntity entity);
-	template<typename PooledComponentType>
-	void removeComponent(CaffeineEntity entity);
+	template<typename ComponentType>
+	void addComponent(CaffeineEntity entity, ComponentType component) {
+		getPool<ComponentType>().add(entity, component);
+	}
 
-	void removeAllComponentsFromEntity(CaffeineEntity entity);
+	template<typename ComponentType>
+	ComponentType& getComponent(CaffeineEntity entity) {
+		return getPool<ComponentType>().get(entity);
+	}
 
+	template<typename ComponentType>
+	bool hasComponent(CaffeineEntity entity) {
+		return getPool<ComponentType>().has(entity);
+	}
 
-	template<typename PooledComponentType>
-	ComponentPool<PooledComponentType>& getPool();
+	template<typename ComponentType>
+	void removeComponent(CaffeineEntity entity) {
+		getPool<ComponentType>().remove(entity);
+	}
+
+	void removeAllComponentsFromEntity(const CaffeineEntity entity);
+
+	template<typename ComponentType>
+	ComponentPool<ComponentType>& getPool() {
+		const std::type_index type = typeid(ComponentType);
+
+		if(componentPools.find(type) == componentPools.end()) {
+			componentPools[type] = std::make_unique<ComponentPool<ComponentType>>();
+		}
+
+		return *static_cast<ComponentPool<ComponentType>*>(componentPools[type].get());
+	}
+
+	void clear();
 };
 
 #endif //CAFFEINEWORLD_HPP

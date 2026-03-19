@@ -7,7 +7,6 @@
 #include <caffeine-gl/gfx/CaffeineShader.hpp>
 #include <caffeine-gl/gfx/CaffeineTexture.hpp>
 
-#include <caffeine-gl/game/CaffeineGameObject.hpp>
 
 struct Particle {
 	glm::vec2 position, velocity;
@@ -28,7 +27,7 @@ public:
 	void SetPositionSpread(int positionSpread);
 	void SetColor(glm::vec4 color);
 
-	void Update(float dt, CaffeineGameObject &object, unsigned int newParticles, glm::vec2 offset = glm::vec2(0.0f, 0.0f));
+	void Update(float dt, CaffeinGameObject &object, unsigned int newParticles, glm::vec2 offset = glm::vec2(0.0f, 0.0f));
 	void Draw();
 
 private:

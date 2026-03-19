@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <caffeine-gl/systems/CaffeineRenderingSystem.hpp>
 
 #include <caffeine-gl/components/CaffeineRenderComponent.hpp>
@@ -9,7 +10,9 @@ void CaffeineRenderingSystem::update(CaffeineWorld &world) {
 	// Iterate through all entities with a CaffeineRenderComponent
 	for(const CaffeineEntity entity : renderPool.entities) {
 		// Skip any entities set to invisible
-		if(!world.getComponent<CaffeineRenderComponent>(entity).visible) continue;
+		auto& renderComponent = world.getComponent<CaffeineRenderComponent>(entity);
+		if(!renderComponent.visible) continue;
+
 		// Also skip any entities without a proper mesh, material, or transform component
 		if(!world.hasComponent<CaffeineMeshComponent>(entity) ||
 			!world.hasComponent<CaffeineMaterialComponent>(entity) ||
@@ -20,9 +23,10 @@ void CaffeineRenderingSystem::update(CaffeineWorld &world) {
 		auto& transformComponent = world.getComponent<CaffeineTransformComponent>(entity);
 
 		renderingCommands.push_back({
+			renderComponent.layer,
 			meshComponent.mesh,
-			materialComponent.material,
-			transformComponent
+			&materialComponent,
+			&transformComponent
 		});
 	}
 
@@ -31,13 +35,18 @@ void CaffeineRenderingSystem::update(CaffeineWorld &world) {
 
 
 void CaffeineRenderingSystem::flush() {
-	for(auto& [mesh, material, transform] : renderingCommands) {
+	// Sort the list by layers
+	std::sort(renderingCommands.begin(), renderingCommands.end(),
+		[](const RenderingCommand& a, const RenderingCommand& b) {
+			return a.layer < b.layer;
+		});
 
+	for(auto& [layer, mesh, material, transform] : renderingCommands) {
 		material->shader->activate();
 
 		material->shader->setMatrix4("projectionMatrix", projectionMatrix, true);
 
-		material->shader->setMatrix4("modelMatrix", transform.getModelMatrix(), true);
+		material->shader->setMatrix4("modelMatrix", transform->getModelMatrix(), true);
 
 		if(material->texture) {
 			glActiveTexture(GL_TEXTURE0);

@@ -6,7 +6,7 @@
 class ComponentPoolInterface {
 public:
 	virtual ~ComponentPoolInterface() = default;
-	virtual void remove(CaffeineEntity entity);
+	virtual void remove(CaffeineEntity entity) = 0;
 };
 
 #endif //COMPONENTPOOLINTERFACE_HPP

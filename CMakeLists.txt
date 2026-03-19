@@ -20,10 +20,6 @@ find_package(OpenGL REQUIRED)
 add_library(${PROJECT_NAME} STATIC
         include/caffeine-gl/base.hpp
 
-        include/caffeine-gl/game/CaffeineGame.hpp
-
-        include/caffeine-gl/game/CaffeineGameObject.hpp
-
         src/gfx/CaffeineShader.cpp
         include/caffeine-gl/gfx/CaffeineShader.hpp
         src/gfx/CaffeineTexture.cpp
@@ -38,29 +34,22 @@ add_library(${PROJECT_NAME} STATIC
 
         src/glad.c
         src/gfx/stb.cpp
-        #include/caffeine-gl/game/CaffeineDrawable.hpp
-        #include/caffeine-gl/game/CaffeineMeshDrawable.hpp
-        include/caffeine-gl/game/CaffeineText.hpp
-        include/caffeine-gl/game/CaffeineParticleGenerator.hpp
+        #include/caffeine-gl/game/CaffeineParticleGenerator.hpp
         include/caffeine-gl/components/CaffeineTransformComponent.hpp
-        src/components/CaffeineTransformComponent.cpp
         include/caffeine-gl/gfx/CaffeineMesh.hpp
         include/caffeine-gl/components/CaffeineMaterialComponent.hpp
-        src/game/CaffeineMeshDrawable.cpp
-        include/caffeine-gl/physics/CollisionSystem.hpp
-        src/physics/CollisionSystem.cpp
-        include/caffeine-gl/physics/Collider.hpp
-        src/physics/Collider.cpp
+        #include/caffeine-gl/physics/CollisionSystem.hpp
+        #src/physics/CollisionSystem.cpp
+        #include/caffeine-gl/physics/Collider.hpp
+        #src/physics/Collider.cpp
         include/caffeine-gl/gfx/TextRenderer.hpp
         src/gfx/TextRenderer.cpp
         include/caffeine-gl/game/CaffeineWorld.hpp
         src/game/CaffeineWorld.cpp
         include/caffeine-gl/game/ComponentPoolInterface.hpp
         include/caffeine-gl/game/ComponentPool.hpp
-        src/game/ComponentPool.cpp
         include/caffeine-gl/components/CaffeineMeshComponent.hpp
         include/caffeine-gl/game/CaffeineEntity.hpp
-        include/caffeine-gl/gfx/CaffeineMaterial.hpp
         include/caffeine-gl/components/CaffeineRenderComponent.hpp
 )
 

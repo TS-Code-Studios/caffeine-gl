@@ -5,13 +5,20 @@
 #include <glm/gtc/type_ptr.hpp>
 
 struct CaffeineTransformComponent {
-	glm::vec2 position{};
-	float rotation;
-	glm::vec2 size{};
+	glm::vec2 position = glm::vec2(0.0f);
+	float rotation = 0.0f;
+	glm::vec2 size = glm::vec2(1.0f);
 
-	explicit CaffeineTransformComponent(glm::vec2 position = glm::vec2(0.0f), float rotation = 0.0f, glm::vec2 size = glm::vec2(1.0f));
+	[[nodiscard]] glm::mat4 getModelMatrix() const {
+		auto modelMatrix = glm::mat4(1.0f);
 
-	[[nodiscard]] glm::mat4 getModelMatrix() const;
+		// Apply transformations in the order: scale, rotate, translate
+		modelMatrix = glm::translate(modelMatrix, glm::vec3(position, 0.0f));
+		modelMatrix = glm::rotate(modelMatrix, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
+		modelMatrix = glm::scale(modelMatrix, glm::vec3(size, 1.0f));
+
+		return modelMatrix;
+	};
 };
 
 
