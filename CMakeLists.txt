@@ -38,10 +38,9 @@ add_library(${PROJECT_NAME} STATIC
         include/caffeine-gl/components/CaffeineTransformComponent.hpp
         include/caffeine-gl/gfx/CaffeineMesh.hpp
         include/caffeine-gl/components/CaffeineMaterialComponent.hpp
-        #include/caffeine-gl/physics/CollisionSystem.hpp
-        #src/physics/CollisionSystem.cpp
-        #include/caffeine-gl/physics/Collider.hpp
-        #src/physics/Collider.cpp
+        include/caffeine-gl/systems/CaffeineCollisionSystem.hpp
+        src/systems/CaffeineCollisionSystem.cpp
+        include/caffeine-gl/components/CaffeineColliderComponent.hpp
         include/caffeine-gl/gfx/TextRenderer.hpp
         src/gfx/TextRenderer.cpp
         include/caffeine-gl/game/CaffeineWorld.hpp

@@ -8,7 +8,7 @@
 
 class CaffeineCollisionSystem {
 public:
-	static void update(CaffeineWorld& world, float deltaTime);
+	static void update(CaffeineWorld& world);
 
 private:
 	[[nodiscard]] static AABB getWorldSpaceAABB(const CaffeineColliderComponent& collider, const CaffeineTransformComponent& transform);

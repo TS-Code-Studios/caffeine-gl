@@ -2,7 +2,7 @@
 
 #include <caffeine-gl/systems/CaffeineCollisionSystem.hpp>
 
-void CaffeineCollisionSystem::update(CaffeineWorld& world, float deltaTime) {
+void CaffeineCollisionSystem::update(CaffeineWorld& world) {
 	const auto& colliderPool = world.getPool<CaffeineColliderComponent>();
 
 	// Iterate through colliders array
