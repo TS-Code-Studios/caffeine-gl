@@ -24,7 +24,7 @@
 #include <caffeine-gl/components/CaffeineMaterialComponent.hpp>
 #include <caffeine-gl/components/CaffeineMeshComponent.hpp>
 
-#include <caffeine-gl/physics/CollisionSystem.hpp>
-#include <caffeine-gl/physics/Collider.hpp>
+#include <systems/CollisionSystem.hpp>
+#include <components/CaffeineColliderComponent.hpp>
 
 #endif //BASE_H
