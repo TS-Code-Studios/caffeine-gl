@@ -19,14 +19,14 @@ class CaffeineRenderingSystem {
 public:
 	static constexpr float virtualWidth = 1920.0f;
 	static constexpr float virtualHeight = 1080.0f;
-	glm::mat4 projectionMatrix = glm::ortho(0.0f, virtualWidth, 0.0f, virtualHeight, -1.0f, 1.0f);;
+	static glm::mat4 projectionMatrix;
 
-	void update(CaffeineWorld& world);
+	static void update(CaffeineWorld& world);
 
 private:
-	std::vector<RenderingCommand> renderingCommands;
+	static std::vector<RenderingCommand> renderingCommands;
 
-	void flush();
+	static void flush();
 };
 
 #endif //RENDERER_H

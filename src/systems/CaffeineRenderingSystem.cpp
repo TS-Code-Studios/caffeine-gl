@@ -3,6 +3,8 @@
 
 #include <caffeine-gl/components/CaffeineRenderComponent.hpp>
 
+std::vector<RenderingCommand> CaffeineRenderingSystem::renderingCommands;
+glm::mat4 CaffeineRenderingSystem::projectionMatrix = glm::ortho(0.0f, virtualWidth, 0.0f, virtualHeight, -1.0f, 1.0f);
 
 void CaffeineRenderingSystem::update(CaffeineWorld &world) {
 	const auto& renderPool = world.getPool<CaffeineRenderComponent>();
