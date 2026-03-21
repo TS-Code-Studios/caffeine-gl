@@ -4,8 +4,8 @@
 #include <caffeine-gl/ui/CaffeineWindow.hpp>
 
 #include <caffeine-gl/game/CaffeineWorld.hpp>
-#include <caffeine-gl/game/ComponentPoolInterface.hpp>
-#include <caffeine-gl/game/ComponentPool.hpp>
+#include <caffeine-gl/game/CaffeineComponentPoolInterface.hpp>
+#include <caffeine-gl/game/CaffeineComponentPool.hpp>
 #include <caffeine-gl/game/CaffeineEntity.hpp>
 
 #include <caffeine-gl/gfx/CaffeineTexture.hpp>

@@ -1,13 +1,13 @@
-#ifndef COMPONENTPOOL_HPP
-#define COMPONENTPOOL_HPP
+#ifndef CAFFEINECOMPONENTPOOL_HPP
+#define CAFFEINECOMPONENTPOOL_HPP
 
 #include <unordered_map>
 #include <vector>
 
-#include <caffeine-gl/game/ComponentPoolInterface.hpp>
+#include <caffeine-gl/game/CaffeineComponentPoolInterface.hpp>
 
 template<typename ComponentType>
-class ComponentPool final : public ComponentPoolInterface {
+class CaffeineComponentPool final : public CaffeineComponentPoolInterface {
 public:
 	std::vector<ComponentType> data;
 	std::vector<CaffeineEntity> entities;
@@ -50,4 +50,4 @@ public:
 	}
 };
 
-#endif //COMPONENTPOOL_HPP
+#endif //CAFFEINECOMPONENTPOOL_HPP

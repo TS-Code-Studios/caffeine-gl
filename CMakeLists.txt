@@ -45,8 +45,8 @@ add_library(${PROJECT_NAME} STATIC
         src/caffeine-gl/gfx/TextRenderer.cpp
         include/caffeine-gl/game/CaffeineWorld.hpp
         src/caffeine-gl/game/CaffeineWorld.cpp
-        include/caffeine-gl/game/ComponentPoolInterface.hpp
-        include/caffeine-gl/game/ComponentPool.hpp
+        include/caffeine-gl/game/CaffeineComponentPoolInterface.hpp
+        include/caffeine-gl/game/CaffeineComponentPool.hpp
         include/caffeine-gl/components/CaffeineMeshComponent.hpp
         include/caffeine-gl/game/CaffeineEntity.hpp
         include/caffeine-gl/components/CaffeineRenderComponent.hpp

@@ -7,14 +7,14 @@
 #include <vector>
 
 #include <caffeine-gl/game/CaffeineEntity.hpp>
-#include <caffeine-gl/game/ComponentPool.hpp>
+#include <caffeine-gl/game/CaffeineComponentPool.hpp>
 
 class CaffeineWorld {
 public:
 	CaffeineEntity nextFreeID = 0;
 	std::vector<CaffeineEntity> availableIDList;
 
-	std::unordered_map<std::type_index, std::unique_ptr<ComponentPoolInterface>> componentPools;
+	std::unordered_map<std::type_index, std::unique_ptr<CaffeineComponentPoolInterface>> componentPools;
 
 	CaffeineWorld() = default;
 
@@ -44,14 +44,14 @@ public:
 	void removeAllComponentsFromEntity(const CaffeineEntity entity);
 
 	template<typename ComponentType>
-	ComponentPool<ComponentType>& getPool() {
+	CaffeineComponentPool<ComponentType>& getPool() {
 		const std::type_index type = typeid(ComponentType);
 
 		if(componentPools.find(type) == componentPools.end()) {
-			componentPools[type] = std::make_unique<ComponentPool<ComponentType>>();
+			componentPools[type] = std::make_unique<CaffeineComponentPool<ComponentType>>();
 		}
 
-		return *static_cast<ComponentPool<ComponentType>*>(componentPools[type].get());
+		return *static_cast<CaffeineComponentPool<ComponentType>*>(componentPools[type].get());
 	}
 
 	void clear();
