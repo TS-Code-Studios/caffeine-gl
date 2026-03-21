@@ -23,6 +23,6 @@
 
 #include <caffeine-gl/systems/CaffeineCollisionSystem.hpp>
 #include <caffeine-gl/systems/CaffeineRenderingSystem.hpp>
-#include <caffeine-gl/systems/CaffeineInputSystem.hpp>
+#include <caffeine-gl/systems/CaffeineVelocitySystem.hpp>
 
 #endif //BASE_H
