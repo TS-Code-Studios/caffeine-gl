@@ -57,6 +57,7 @@ add_library(${PROJECT_NAME} STATIC
         include/caffeine-gl/components/CaffeineTextComponent.hpp
         include/caffeine-gl/systems/CaffeineTextRenderingSystem.hpp
         src/caffeine-gl/systems/CaffeineTextRenderingSystem.cpp
+        include/caffeine-gl/components/CaffeineComponent.hpp
 )
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)

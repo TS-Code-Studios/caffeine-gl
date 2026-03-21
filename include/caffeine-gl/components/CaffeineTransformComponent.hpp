@@ -1,10 +1,12 @@
-#ifndef TRANSFORM_HPP
-#define TRANSFORM_HPP
+#ifndef CAFFEINETRANSFORMCOMPONENT_HPP
+#define CAFFEINETRANSFORMCOMPONENT_HPP
+
+#include <caffeine-gl/components/CaffeineComponent.hpp>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-struct CaffeineTransformComponent {
+struct CaffeineTransformComponent : CaffeineComponent {
 	glm::vec2 position = glm::vec2(0.0f);
 	float rotation = 0.0f;
 	glm::vec2 size = glm::vec2(1.0f);
@@ -23,4 +25,4 @@ struct CaffeineTransformComponent {
 
 
 
-#endif //TRANSFORM_HPP
+#endif //CAFFEINETRANSFORMCOMPONENT_HPP

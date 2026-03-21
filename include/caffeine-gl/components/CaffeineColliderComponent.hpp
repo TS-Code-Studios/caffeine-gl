@@ -1,5 +1,7 @@
-#ifndef COLLIDER_HPP
-#define COLLIDER_HPP
+#ifndef CAFFEINECOLLIDERCOMPONENT_HPP
+#define CAFFEINECOLLIDERCOMPONENT_HPP
+
+#include <caffeine-gl/components/CaffeineComponent.hpp>
 
 #include <glm/glm.hpp>
 
@@ -19,7 +21,7 @@ enum ColliderShape {
 	CIRCLE
 };
 
-struct CaffeineColliderComponent {
+struct CaffeineColliderComponent : CaffeineComponent {
 	ColliderType type = STATIC;
 	ColliderShape shape = QUAD;
 
@@ -31,4 +33,4 @@ struct CaffeineColliderComponent {
 	std::function<void(CaffeineEntity thisEntity, CaffeineEntity otherEntity)> collisionCallback;
 };
 
-#endif //COLLIDER_HPP
+#endif //CAFFEINECOLLIDERCOMPONENT_HPP

@@ -22,21 +22,25 @@ public:
 	void destroyEntity(CaffeineEntity entity);
 
 	template<typename ComponentType>
+	requires Component<ComponentType>
 	void addComponent(CaffeineEntity entity, ComponentType component) {
 		getPool<ComponentType>().add(entity, component);
 	}
 
 	template<typename ComponentType>
+	requires Component<ComponentType>
 	ComponentType& getComponent(CaffeineEntity entity) {
 		return getPool<ComponentType>().get(entity);
 	}
 
 	template<typename ComponentType>
+	requires Component<ComponentType>
 	bool hasComponent(CaffeineEntity entity) {
 		return getPool<ComponentType>().has(entity);
 	}
 
 	template<typename ComponentType>
+	requires Component<ComponentType>
 	void removeComponent(CaffeineEntity entity) {
 		getPool<ComponentType>().remove(entity);
 	}
@@ -44,6 +48,7 @@ public:
 	void removeAllComponentsFromEntity(const CaffeineEntity entity);
 
 	template<typename ComponentType>
+	requires Component<ComponentType>
 	CaffeineComponentPool<ComponentType>& getPool() {
 		const std::type_index type = typeid(ComponentType);
 

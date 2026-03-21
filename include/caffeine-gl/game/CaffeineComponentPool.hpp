@@ -5,8 +5,10 @@
 #include <vector>
 
 #include <caffeine-gl/game/CaffeineComponentPoolInterface.hpp>
+#include <caffeine-gl/components/CaffeineComponent.hpp>
 
 template<typename ComponentType>
+requires Component<ComponentType>
 class CaffeineComponentPool final : public CaffeineComponentPoolInterface {
 public:
 	std::vector<ComponentType> data;

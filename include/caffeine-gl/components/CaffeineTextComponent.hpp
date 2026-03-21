@@ -3,11 +3,13 @@
 
 #include <string>
 
+#include <caffeine-gl/components/CaffeineComponent.hpp>
+
 #include <caffeine-gl/gfx/CaffeineShader.hpp>
 
 class CaffeineFont;
 
-struct CaffeineTextComponent {
+struct CaffeineTextComponent : CaffeineComponent {
 	std::string text;
 	CaffeineFont* font;
 	CaffeineShader* shader;
