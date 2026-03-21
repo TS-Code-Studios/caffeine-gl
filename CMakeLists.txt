@@ -51,7 +51,8 @@ add_library(${PROJECT_NAME} STATIC
         include/caffeine-gl/game/CaffeineEntity.hpp
         include/caffeine-gl/components/CaffeineRenderComponent.hpp
         include/caffeine-gl/components/CaffeineVelocityComponent.hpp
-        include/caffeine-gl/systems/CaffeineInputSystem.hpp
+        include/caffeine-gl/systems/CaffeineVelocitySystem.hpp
+        src/systems/CaffeineVelocitySystem.cpp
 )
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
