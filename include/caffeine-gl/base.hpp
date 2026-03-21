@@ -11,7 +11,7 @@
 #include <caffeine-gl/gfx/CaffeineTexture.hpp>
 #include <caffeine-gl/gfx/CaffeineShader.hpp>
 //#include <caffeine-gl/gfx/ParticleGenerator.hpp>
-#include <caffeine-gl/gfx/ResourceManager.hpp>
+#include <caffeine-gl/gfx/CaffeineResourceManager.hpp>
 
 
 #include <caffeine-gl/components/CaffeineMeshComponent.hpp>

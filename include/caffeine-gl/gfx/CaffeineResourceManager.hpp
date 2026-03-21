@@ -22,7 +22,7 @@
 //#include "caffeine-gl/game/CaffeineMeshDrawable.hpp"
 
 
-class ResourceManager {
+class CaffeineResourceManager {
 public:
 	static std::filesystem::path getExecutablePath();
 	static void setResourceRoot(const std::filesystem::path& root);

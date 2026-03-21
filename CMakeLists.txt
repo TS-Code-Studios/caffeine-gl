@@ -20,31 +20,31 @@ find_package(OpenGL REQUIRED)
 add_library(${PROJECT_NAME} STATIC
         include/caffeine-gl/base.hpp
 
-        src/gfx/CaffeineShader.cpp
+        src/caffeine-gl/gfx/CaffeineShader.cpp
         include/caffeine-gl/gfx/CaffeineShader.hpp
-        src/gfx/CaffeineTexture.cpp
+        src/caffeine-gl/gfx/CaffeineTexture.cpp
         include/caffeine-gl/gfx/CaffeineTexture.hpp
-        src/gfx/ResourceManager.cpp
-        include/caffeine-gl/gfx/ResourceManager.hpp
-        src/systems/CaffeineRenderingSystem.cpp
+        src/caffeine-gl/gfx/CaffeineResourceManager.cpp
+        include/caffeine-gl/gfx/CaffeineResourceManager.hpp
+        src/caffeine-gl/systems/CaffeineRenderingSystem.cpp
         include/caffeine-gl/systems/CaffeineRenderingSystem.hpp
 
         include/caffeine-gl/ui/CaffeineWindow.hpp
-        src/ui/CaffeineWindow.cpp
+        src/caffeine-gl/ui/CaffeineWindow.cpp
 
-        src/glad.c
-        src/gfx/stb.cpp
+        src/glad/glad.c
+        src/stb/stb.cpp
         #include/caffeine-gl/game/CaffeineParticleGenerator.hpp
         include/caffeine-gl/components/CaffeineTransformComponent.hpp
         include/caffeine-gl/gfx/CaffeineMesh.hpp
         include/caffeine-gl/components/CaffeineMaterialComponent.hpp
         include/caffeine-gl/systems/CaffeineCollisionSystem.hpp
-        src/systems/CaffeineCollisionSystem.cpp
+        src/caffeine-gl/systems/CaffeineCollisionSystem.cpp
         include/caffeine-gl/components/CaffeineColliderComponent.hpp
         include/caffeine-gl/gfx/TextRenderer.hpp
-        src/gfx/TextRenderer.cpp
+        src/caffeine-gl/gfx/TextRenderer.cpp
         include/caffeine-gl/game/CaffeineWorld.hpp
-        src/game/CaffeineWorld.cpp
+        src/caffeine-gl/game/CaffeineWorld.cpp
         include/caffeine-gl/game/ComponentPoolInterface.hpp
         include/caffeine-gl/game/ComponentPool.hpp
         include/caffeine-gl/components/CaffeineMeshComponent.hpp
@@ -52,7 +52,7 @@ add_library(${PROJECT_NAME} STATIC
         include/caffeine-gl/components/CaffeineRenderComponent.hpp
         include/caffeine-gl/components/CaffeineVelocityComponent.hpp
         include/caffeine-gl/systems/CaffeineVelocitySystem.hpp
-        src/systems/CaffeineVelocitySystem.cpp
+        src/caffeine-gl/systems/CaffeineVelocitySystem.cpp
 )
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)

@@ -2,17 +2,17 @@
 #include <sstream>
 #include <fstream>
 
-#include <caffeine-gl/gfx/ResourceManager.hpp>
-#include <caffeine-gl/gfx/stb_image.h>
+#include <caffeine-gl/gfx/CaffeineResourceManager.hpp>
+#include <stb/stb_image.h>
 
-std::filesystem::path ResourceManager::resourceRoot;
+std::filesystem::path CaffeineResourceManager::resourceRoot;
 
-std::map<std::string, CaffeineTexture> ResourceManager::textures;
-std::map<std::string, CaffeineShader> ResourceManager::shaders;
-std::map<std::string, CaffeineMesh> ResourceManager::meshes;
+std::map<std::string, CaffeineTexture> CaffeineResourceManager::textures;
+std::map<std::string, CaffeineShader> CaffeineResourceManager::shaders;
+std::map<std::string, CaffeineMesh> CaffeineResourceManager::meshes;
 
 // Unload all resources
-void ResourceManager::clear() {
+void CaffeineResourceManager::clear() {
     shaders.clear();
     textures.clear();
     meshes.clear();
@@ -23,7 +23,7 @@ void ResourceManager::clear() {
 
 // Retrieves the executable's absolute path
 // Experimental! To do: Check on all platforms
-std::filesystem::path ResourceManager::getExecutablePath() {
+std::filesystem::path CaffeineResourceManager::getExecutablePath() {
     #if defined(_WIN32)
         char buffer[MAX_PATH];
         GetModuleFileNameA(nullptr, buffer, MAX_PATH);
@@ -50,11 +50,11 @@ std::filesystem::path ResourceManager::getExecutablePath() {
     #endif
 }
 
-void ResourceManager::setResourceRoot(const std::filesystem::path& root) {
+void CaffeineResourceManager::setResourceRoot(const std::filesystem::path& root) {
     resourceRoot = root;
 }
 
-std::filesystem::path ResourceManager::getResourceRoot() {
+std::filesystem::path CaffeineResourceManager::getResourceRoot() {
     if (resourceRoot.empty()) {
         throw std::runtime_error("Resource root not set. Call ResourceManager::setResourceRoot() before accessing resources.");
     }
@@ -62,31 +62,31 @@ std::filesystem::path ResourceManager::getResourceRoot() {
 }
 
 // Resolves a relative resource path to an absolute path based on the resource root
-std::filesystem::path ResourceManager::resolveResourcePath(const std::filesystem::path &relativePath) {
+std::filesystem::path CaffeineResourceManager::resolveResourcePath(const std::filesystem::path &relativePath) {
     return getResourceRoot() / relativePath;
 }
 
 
 // Shader management functions
-CaffeineShader& ResourceManager::loadShader(const char *vertexShaderPath, const char *fragmentShaderPath, const char *geometryShaderPath, const std::string &name) {
+CaffeineShader& CaffeineResourceManager::loadShader(const char *vertexShaderPath, const char *fragmentShaderPath, const char *geometryShaderPath, const std::string &name) {
     shaders.emplace(name, createShaderProgram(vertexShaderPath, fragmentShaderPath, geometryShaderPath));
     return shaders.at(name);
 }
-CaffeineShader& ResourceManager::getShader(const std::string& name) {
+CaffeineShader& CaffeineResourceManager::getShader(const std::string& name) {
     return shaders.at(name);
 }
 
 // Texture management functions
-CaffeineTexture& ResourceManager::loadTexture(const char *file, const std::string& name) {
+CaffeineTexture& CaffeineResourceManager::loadTexture(const char *file, const std::string& name) {
     textures.emplace(name, loadTextureFromFile(file));
     return textures.at(name);
 }
-CaffeineTexture& ResourceManager::getTexture(const std::string &name) {
+CaffeineTexture& CaffeineResourceManager::getTexture(const std::string &name) {
     return textures.at(name);
 }
 
 // Mesh management functions
-void ResourceManager::createDefaultMeshes() {
+void CaffeineResourceManager::createDefaultMeshes() {
     const std::vector<Vertex2D> quadVertices = {
         {-0.5f, -0.5f, 0,0, 1,1,1,1}, // Bottom left
         { 0.5f, -0.5f, 1,0, 1,1,1,1}, // Bottom right
@@ -97,18 +97,18 @@ void ResourceManager::createDefaultMeshes() {
 
     loadMesh(quadVertices, quadIndices, "quad");
 }
-CaffeineMesh& ResourceManager::loadMesh(const std::vector<Vertex2D> &vertices, const std::vector<uint32_t> &indices, const std::string &name) {
+CaffeineMesh& CaffeineResourceManager::loadMesh(const std::vector<Vertex2D> &vertices, const std::vector<uint32_t> &indices, const std::string &name) {
     meshes.try_emplace(name, vertices, indices);
     return meshes.at(name);
 }
-CaffeineMesh& ResourceManager::getMesh(const std::string &name) {
+CaffeineMesh& CaffeineResourceManager::getMesh(const std::string &name) {
     return meshes.at(name);
 }
 
 
 // Internal functions for loading shader code and texture data from files
 
-CaffeineShader ResourceManager::createShaderProgram(const char *vertexShaderPath, const char *fragmentShaderPath, const char *geometryShaderPath) {
+CaffeineShader CaffeineResourceManager::createShaderProgram(const char *vertexShaderPath, const char *fragmentShaderPath, const char *geometryShaderPath) {
     std::string vertexShaderCode;
     std::string fragmentShaderCode;
     std::string geometryShaderCode;
@@ -140,7 +140,7 @@ CaffeineShader ResourceManager::createShaderProgram(const char *vertexShaderPath
     return shader;
 }
 
-std::string ResourceManager::loadShaderCodeFromFile(const std::filesystem::path& path) {
+std::string CaffeineResourceManager::loadShaderCodeFromFile(const std::filesystem::path& path) {
     // Open file
     std::ifstream shaderFile(path);
     std::stringstream shaderStream;
@@ -155,7 +155,7 @@ std::string ResourceManager::loadShaderCodeFromFile(const std::filesystem::path&
 }
 
 
-CaffeineTexture ResourceManager::loadTextureFromFile(const char *path) {
+CaffeineTexture CaffeineResourceManager::loadTextureFromFile(const char *path) {
     std::string resolvedPath = resolveResourcePath(path).string();
 
     CaffeineTexture texture;
