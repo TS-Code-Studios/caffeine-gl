@@ -35,7 +35,7 @@ public:
 	void renderText(const CaffeineTextComponent& text, CaffeineTransformComponent transform);
 
 private:
-	unsigned int vao, vbo, ebo;
+	unsigned int vao{}, vbo{}, ebo{};
 
 	std::map<char, Character> characters;
 };
