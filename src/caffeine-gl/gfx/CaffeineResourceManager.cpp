@@ -11,11 +11,15 @@ std::map<std::string, CaffeineTexture> CaffeineResourceManager::textures;
 std::map<std::string, CaffeineShader> CaffeineResourceManager::shaders;
 std::map<std::string, CaffeineMesh> CaffeineResourceManager::meshes;
 
+std::map<std::string, CaffeineFont> CaffeineResourceManager::fonts;
+
 // Unload all resources
 void CaffeineResourceManager::clear() {
     shaders.clear();
     textures.clear();
     meshes.clear();
+
+    fonts.clear();
 }
 
 
@@ -67,6 +71,7 @@ std::filesystem::path CaffeineResourceManager::resolveResourcePath(const std::fi
 }
 
 
+
 // Shader management functions
 CaffeineShader& CaffeineResourceManager::loadShader(const char *vertexShaderPath, const char *fragmentShaderPath, const char *geometryShaderPath, const std::string &name) {
     shaders.emplace(name, createShaderProgram(vertexShaderPath, fragmentShaderPath, geometryShaderPath));
@@ -76,14 +81,16 @@ CaffeineShader& CaffeineResourceManager::getShader(const std::string& name) {
     return shaders.at(name);
 }
 
+
 // Texture management functions
-CaffeineTexture& CaffeineResourceManager::loadTexture(const char *file, const std::string& name) {
-    textures.emplace(name, loadTextureFromFile(file));
+CaffeineTexture& CaffeineResourceManager::loadTexture(const char *path, const std::string& name) {
+    textures.emplace(name, loadTextureFromFile(path));
     return textures.at(name);
 }
 CaffeineTexture& CaffeineResourceManager::getTexture(const std::string &name) {
     return textures.at(name);
 }
+
 
 // Mesh management functions
 void CaffeineResourceManager::createDefaultMeshes() {
@@ -106,7 +113,18 @@ CaffeineMesh& CaffeineResourceManager::getMesh(const std::string &name) {
 }
 
 
-// Internal functions for loading shader code and texture data from files
+// Font management functions
+CaffeineFont& CaffeineResourceManager::loadFont(const char *path, const std::string &name) {
+    fonts.emplace(name, CaffeineFont(resolveResourcePath(path)));
+    return fonts.at(name);
+}
+CaffeineFont &CaffeineResourceManager::getFont(const std::string &name) {
+    return fonts.at(name);
+}
+
+
+
+// Internal helper functions for loading shader code and texture data from files
 
 CaffeineShader CaffeineResourceManager::createShaderProgram(const char *vertexShaderPath, const char *fragmentShaderPath, const char *geometryShaderPath) {
     std::string vertexShaderCode;

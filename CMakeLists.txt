@@ -41,7 +41,6 @@ add_library(${PROJECT_NAME} STATIC
         include/caffeine-gl/systems/CaffeineCollisionSystem.hpp
         src/caffeine-gl/systems/CaffeineCollisionSystem.cpp
         include/caffeine-gl/components/CaffeineColliderComponent.hpp
-        include/caffeine-gl/gfx/TextRenderer.hpp
         src/caffeine-gl/gfx/TextRenderer.cpp
         include/caffeine-gl/game/CaffeineWorld.hpp
         src/caffeine-gl/game/CaffeineWorld.cpp
@@ -53,6 +52,11 @@ add_library(${PROJECT_NAME} STATIC
         include/caffeine-gl/components/CaffeineVelocityComponent.hpp
         include/caffeine-gl/systems/CaffeineVelocitySystem.hpp
         src/caffeine-gl/systems/CaffeineVelocitySystem.cpp
+        include/caffeine-gl/gfx/CaffeineFont.hpp
+        src/caffeine-gl/gfx/CaffeineFont.cpp
+        include/caffeine-gl/components/CaffeineTextComponent.hpp
+        include/caffeine-gl/systems/CaffeineTextRenderingSystem.hpp
+        src/caffeine-gl/systems/CaffeineTextRenderingSystem.cpp
 )
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)

@@ -17,9 +17,8 @@
 
 #include <caffeine-gl/gfx/CaffeineShader.hpp>
 #include <caffeine-gl/gfx/CaffeineTexture.hpp>
-
 #include <caffeine-gl/gfx/CaffeineMesh.hpp>
-//#include "caffeine-gl/game/CaffeineMeshDrawable.hpp"
+#include <caffeine-gl/gfx/CaffeineFont.hpp>
 
 
 class CaffeineResourceManager {
@@ -30,16 +29,19 @@ public:
 
 	static void clear();
 
-
-	static CaffeineShader& loadShader(const char *vertexShaderPath, const char *fragmentShaderPath, const char *geometryShaderPath, const std::string &name);
+	static CaffeineShader& loadShader(const char *vertexShaderPath, const char *fragmentShaderPath, const char *geometryShaderPath, const std::string& name);
 	static CaffeineShader& getShader(const std::string& name);
 
-	static CaffeineTexture& loadTexture(const char *file, const std::string& name);
-	static CaffeineTexture& getTexture(const std::string &name);
+	static CaffeineTexture& loadTexture(const char *path, const std::string& name);
+	static CaffeineTexture& getTexture(const std::string& name);
 
 	static void createDefaultMeshes();
 	static CaffeineMesh& loadMesh(const std::vector<Vertex2D> &vertices, const std::vector<uint32_t> &indices, const std::string& name);
 	static CaffeineMesh& getMesh(const std::string &name);
+
+
+	static CaffeineFont& loadFont(const char *path, const std::string& name);
+	static CaffeineFont& getFont(const std::string& name);
 
 private:
 	static std::filesystem::path resourceRoot;
@@ -48,6 +50,8 @@ private:
 	static std::map<std::string, CaffeineShader> shaders;
 	static std::map<std::string, CaffeineTexture> textures;
 	static std::map<std::string, CaffeineMesh> meshes;
+
+	static std::map<std::string, CaffeineFont> fonts;
 
 	static CaffeineShader createShaderProgram(const char *vertexShaderPath, const char *fragmentShaderPath, const char *geometryShaderPath = nullptr);
 	static std::string loadShaderCodeFromFile(const std::filesystem::path& path);

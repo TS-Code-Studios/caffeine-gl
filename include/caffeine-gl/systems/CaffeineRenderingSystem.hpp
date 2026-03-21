@@ -1,5 +1,5 @@
-#ifndef RENDERER_H
-#define RENDERER_H
+#ifndef CAFFEINERENDERINGSYSTEM_H
+#define CAFFEINERENDERINGSYSTEM_H
 
 #include <caffeine-gl/game/CaffeineWorld.hpp>
 
@@ -29,4 +29,4 @@ private:
 	static void flush();
 };
 
-#endif //RENDERER_H
+#endif //CAFFEINERENDERINGSYSTEM_H

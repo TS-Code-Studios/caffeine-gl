@@ -31,8 +31,8 @@ void CaffeineCollisionSystem::update(CaffeineWorld& world) {
 			if(checkCollision_AABB(
 				getWorldSpaceAABB(colliderComponent_1, transformComponent_1),
 				getWorldSpaceAABB(colliderComponent_2, transformComponent_2))) {
-				colliderComponent_1.collisionCallback(entity1, entity2);
-				colliderComponent_2.collisionCallback(entity2, entity1);
+				if(colliderComponent_1.collisionCallback) colliderComponent_1.collisionCallback(entity1, entity2);
+				if(colliderComponent_2.collisionCallback) colliderComponent_2.collisionCallback(entity2, entity1);
 			}
 		}
 	}
