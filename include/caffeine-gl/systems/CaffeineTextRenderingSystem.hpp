@@ -10,8 +10,8 @@
 struct TextRenderingCommand {
 	int layer;
 
-	CaffeineTextComponent& text;
-	CaffeineTransformComponent& transform;
+	CaffeineTextComponent* text;
+	CaffeineTransformComponent* transform;
 };
 
 class CaffeineTextRenderingSystem {

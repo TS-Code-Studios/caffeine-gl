@@ -6,7 +6,9 @@
 #include <glm/glm.hpp>
 
 struct CaffeineVelocityComponent : CaffeineComponent {
-	glm::vec2 velocity = glm::vec2(0.0f);
+	glm::vec2* velocity;
+
+	explicit CaffeineVelocityComponent(glm::vec2* velocity): velocity(velocity) {};
 };
 
 #endif //CAFFEINEVELOCITYCOMPONENT_HPP

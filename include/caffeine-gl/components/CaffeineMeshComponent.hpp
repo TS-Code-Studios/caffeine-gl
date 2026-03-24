@@ -7,6 +7,8 @@
 
 struct CaffeineMeshComponent : CaffeineComponent {
 	CaffeineMesh* mesh = nullptr;
+
+	explicit CaffeineMeshComponent(CaffeineMesh* mesh): mesh(mesh) {};
 };
 
 #endif //CAFFEINEMESHCOMPONENT_HPP

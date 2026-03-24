@@ -6,6 +6,10 @@
 struct CaffeineRenderComponent : CaffeineComponent {
 	int layer = 0;
 	bool visible = true;
+
+	CaffeineRenderComponent() = default;
+
+	CaffeineRenderComponent(const int layer, const bool visible): layer(layer), visible(visible) {};
 };
 
 #endif //CAFFEINERENDERCOMPONENT_HPP

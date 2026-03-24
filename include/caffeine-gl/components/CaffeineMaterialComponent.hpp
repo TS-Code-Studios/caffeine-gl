@@ -9,6 +9,8 @@
 struct CaffeineMaterialComponent : CaffeineComponent {
 	CaffeineShader* shader;
 	CaffeineTexture* texture;
+
+	CaffeineMaterialComponent(CaffeineShader* shader, CaffeineTexture* texture): shader(shader), texture(texture) {};
 };
 
 #endif //MATERIAL_HPP

@@ -9,6 +9,6 @@ void CaffeineVelocitySystem::update(CaffeineWorld &world, const float deltaTime)
 		auto& velocityComponent = world.getComponent<CaffeineVelocityComponent>(entity);
 		auto& transformComponent = world.getComponent<CaffeineTransformComponent>(entity);
 
-		transformComponent.position += velocityComponent.velocity * deltaTime;
+		transformComponent.position += *velocityComponent.velocity * deltaTime;
 	}
 }

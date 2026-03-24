@@ -11,6 +11,8 @@ struct CaffeineTransformComponent : CaffeineComponent {
 	float rotation = 0.0f;
 	glm::vec2 size = glm::vec2(1.0f);
 
+	CaffeineTransformComponent(glm::vec2 position, float rotation, glm::vec2 size): position(position), rotation(rotation), size(size){};
+
 	[[nodiscard]] glm::mat4 getModelMatrix() const {
 		auto modelMatrix = glm::mat4(1.0f);
 

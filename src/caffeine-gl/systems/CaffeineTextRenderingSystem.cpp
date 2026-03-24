@@ -20,8 +20,8 @@ void CaffeineTextRenderingSystem::update(CaffeineWorld &world) {
 		textRenderingCommands.push_back({
 			renderComponent.layer,
 
-			textComponent,
-			transformComponent
+			&textComponent,
+			&transformComponent
 		});
 	};
 
@@ -35,7 +35,7 @@ void CaffeineTextRenderingSystem::flush() {
 		});
 
 	for(const TextRenderingCommand command : textRenderingCommands) {
-		command.text.font->renderText(command.text, command.transform);
+		command.text->font->renderText(*command.text, *command.transform);
 	}
 
 	textRenderingCommands.clear();
