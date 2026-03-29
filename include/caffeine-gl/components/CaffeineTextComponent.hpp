@@ -14,9 +14,9 @@ struct CaffeineTextComponent : CaffeineComponent {
 	std::string text;
 	CaffeineFont* font;
 	CaffeineShader* shader;
-	glm::vec3 color;
+	glm::vec4 color;
 
-	CaffeineTextComponent(std::string text, CaffeineFont* font, CaffeineShader* shader, const glm::vec3 color): text(std::move(text)), font(font), shader(shader), color(color) {};
+	CaffeineTextComponent(std::string text, CaffeineFont* font, CaffeineShader* shader, const glm::vec4 color): text(std::move(text)), font(font), shader(shader), color(color) {};
 };
 
 #endif //CAFFEINETEXTCOMPONENT_HPP

@@ -1,5 +1,7 @@
 #include <caffeine-gl/gfx/CaffeineFont.hpp>
 
+#include "caffeine-gl/systems/CaffeineRenderingSystem.hpp"
+
 CaffeineFont::CaffeineFont(const std::filesystem::path& path) {
 	FT_Library freetype;
 	FT_Face face;
@@ -40,14 +42,15 @@ CaffeineFont::CaffeineFont(const std::filesystem::path& path) {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-		Character character = {
-			texture,
-			glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
-			glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
-			face->glyph->advance.x
-		};
-
-		characters.emplace(std::pair<char, Character>(glyph, character));
+		characters.try_emplace(
+			glyph,
+			Character(
+				texture,
+				glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
+				glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
+				face->glyph->advance.x
+			)
+		);
 	}
 
 	FT_Done_Face(face);
@@ -77,37 +80,47 @@ CaffeineFont::CaffeineFont(const std::filesystem::path& path) {
 
 void CaffeineFont::renderText(const CaffeineTextComponent& text, CaffeineTransformComponent transform) {
 	text.shader->activate();
-	text.shader->setVector3f("textColor", text.color);
+	text.shader->setVector4f("textColor", text.color);
+	text.shader->setMatrix4("projectionMatrix", CaffeineRenderingSystem::projectionMatrix);
+
 	glActiveTexture(GL_TEXTURE0);
 	glBindVertexArray(vao);
+
 	for(char c : text.text) {
-		auto&[textureID, size, bearing, advance] = characters[c];
+		if (auto entry = characters.find(c); entry != characters.end()) {
+			auto& [textureID, size, bearing, advance] = entry->second;
 
-		const float xPos = transform.position.x + static_cast<float>(bearing.x) * transform.size.x;
-		const float yPos = transform.position.y - static_cast<float>(size.y - bearing.y) * transform.size.y;
+			const float xPos = transform.position.x + static_cast<float>(bearing.x) * transform.size.x;
+			const float yPos = transform.position.y + static_cast<float>(size.y - bearing.y) * transform.size.y;
 
-		const float width = static_cast<float>(size.x) * transform.size.x;
-		const float height = static_cast<float>(size.y) * transform.size.y;
+			const float width = static_cast<float>(size.x) * transform.size.x;
+			const float height = static_cast<float>(size.y) * transform.size.y;
 
-		const float vertices[6][4] = {
-			{xPos,         yPos,            0.0f, 0.0f }, // Bottom left
-			{xPos + width, yPos,            1.0f, 0.0f }, // Bottom right
-			{xPos,         yPos + height,   0.0f, 1.0f }, // Top left
-			{xPos + width, yPos + height,   1.0f, 1.0f }, // Top right
-		};
+			const float vertices[4][4] = {
+				{xPos,         yPos,            0.0f, 1.0f }, // Bottom left
+				{xPos + width, yPos,            1.0f, 1.0f }, // Bottom right
+				{xPos,         yPos + height,   0.0f, 0.0f }, // Top left
+				{xPos + width, yPos + height,   1.0f, 0.0f }, // Top right
+			};
 
-		glBindTexture(GL_TEXTURE_2D, textureID);
+			glBindTexture(GL_TEXTURE_2D, textureID);
+			text.shader->setInteger("text", 0);
 
-		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+			glBindBuffer(GL_ARRAY_BUFFER, vbo);
+			glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, static_cast<void*>(nullptr));
 
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, static_cast<void*>(nullptr));
-
-		// now advance cursors for next glyph (note that advance is number of 1/64 pixels)
-		// @TODO: add rotated text support
-		transform.position.x += static_cast<float>(advance >> 6) * transform.size.x;
+			// now advance cursors for next glyph (note that advance is number of 1/64 pixels)
+			// @TODO: add rotated text support
+			transform.position.x += static_cast<float>(advance >> 6) * transform.size.x;
+		} else {
+			// @TODO: missing glyph handling
+		}
 	}
+
+	glBindVertexArray(0);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 

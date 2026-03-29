@@ -115,7 +115,7 @@ CaffeineMesh& CaffeineResourceManager::getMesh(const std::string &name) {
 
 // Font management functions
 CaffeineFont& CaffeineResourceManager::loadFont(const char *path, const std::string &name) {
-    fonts.emplace(name, CaffeineFont(resolveResourcePath(path)));
+    fonts.try_emplace(name, CaffeineFont(resolveResourcePath(path)));
     return fonts.at(name);
 }
 CaffeineFont &CaffeineResourceManager::getFont(const std::string &name) {

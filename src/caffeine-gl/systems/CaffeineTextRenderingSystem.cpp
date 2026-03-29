@@ -3,6 +3,7 @@
 
 #include <caffeine-gl/gfx/CaffeineFont.hpp>
 
+std::vector<TextRenderingCommand> CaffeineTextRenderingSystem::textRenderingCommands;
 
 void CaffeineTextRenderingSystem::update(CaffeineWorld &world) {
 	const auto& textPool = world.getPool<CaffeineTextComponent>();
