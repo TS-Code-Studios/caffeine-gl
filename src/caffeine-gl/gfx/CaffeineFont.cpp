@@ -58,6 +58,13 @@ CaffeineFont::CaffeineFont(const std::filesystem::path& path) {
 
 	const std::vector<uint32_t> indices {0, 1, 2, 1, 2, 3};
 
+	const float vertices[4][4] = {
+		{-0.5f, -0.5f,  0.0f, 1.0f}, // Bottom left
+		{ 0.5f, -0.5f,  1.0f, 1.0f}, // Bottom right
+		{-0.5f,  0.5f,  0.0f, 0.0f}, // Top left
+		{ 0.5f,  0.5f,  1.0f, 0.0f}, // Top right
+	};
+
 	glGenVertexArrays(1, &vao);
 	glGenBuffers(1, &vbo);
 	glGenBuffers(1, &ebo);
@@ -65,7 +72,7 @@ CaffeineFont::CaffeineFont(const std::filesystem::path& path) {
 	glBindVertexArray(vao);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 16, nullptr, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 16, vertices, GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(uint32_t), indices.data(), GL_STATIC_DRAW);
@@ -87,28 +94,25 @@ void CaffeineFont::renderText(const CaffeineTextComponent& text, CaffeineTransfo
 	glBindVertexArray(vao);
 
 	for(char c : text.text) {
+		auto modelMatrix = glm::mat4(1.0f);
 		if (auto entry = characters.find(c); entry != characters.end()) {
 			auto& [textureID, size, bearing, advance] = entry->second;
 
 			const float xPos = transform.position.x + static_cast<float>(bearing.x) * transform.size.x;
-			const float yPos = transform.position.y + static_cast<float>(size.y - bearing.y) * transform.size.y;
+			const float yPos = transform.position.y + (static_cast<float>(size.y) - static_cast<float>(bearing.y)  / 2.0f) * transform.size.y;
 
 			const float width = static_cast<float>(size.x) * transform.size.x;
 			const float height = static_cast<float>(size.y) * transform.size.y;
 
-			const float vertices[4][4] = {
-				{xPos,         yPos,            0.0f, 1.0f }, // Bottom left
-				{xPos + width, yPos,            1.0f, 1.0f }, // Bottom right
-				{xPos,         yPos + height,   0.0f, 0.0f }, // Top left
-				{xPos + width, yPos + height,   1.0f, 0.0f }, // Top right
-			};
+			modelMatrix = glm::translate(modelMatrix, glm::vec3(xPos, yPos, 0.0f));
+			modelMatrix = glm::rotate(modelMatrix, glm::radians(transform.rotation), glm::vec3(0.0f, 0.0f, 1.0f));
+			modelMatrix = glm::scale(modelMatrix, glm::vec3(width, height, 1.0f));
+
+			text.shader->setMatrix4("modelMatrix", modelMatrix);
 
 			glBindTexture(GL_TEXTURE_2D, textureID);
 			text.shader->setInteger("text", 0);
 
-			glBindBuffer(GL_ARRAY_BUFFER, vbo);
-			glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
-			glBindBuffer(GL_ARRAY_BUFFER, 0);
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, static_cast<void*>(nullptr));
 
 			// now advance cursors for next glyph (note that advance is number of 1/64 pixels)
