@@ -1,6 +1,9 @@
 #include <caffeine-gl/gfx/CaffeineFont.hpp>
 
+#include "caffeine-gl/gfx/CaffeineResourceManager.hpp"
 #include "caffeine-gl/systems/CaffeineRenderingSystem.hpp"
+
+#include <iostream>
 
 CaffeineFont::CaffeineFont(const std::filesystem::path& path) {
 	FT_Library freetype;
@@ -22,30 +25,13 @@ CaffeineFont::CaffeineFont(const std::filesystem::path& path) {
 			continue;
 		}
 
-		unsigned int texture;
-		glGenTextures(1, &texture);
-		glBindTexture(GL_TEXTURE_2D, texture);
-		glTexImage2D(
-			GL_TEXTURE_2D,
-			0,
-			GL_RED,
-			face->glyph->bitmap.width,
-			face->glyph->bitmap.rows,
-			0,
-			GL_RED,
-			GL_UNSIGNED_BYTE,
-			face->glyph->bitmap.buffer
-		);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		CaffeineTexture texture;
+		texture.generate(static_cast<GLsizei>(face->glyph->bitmap.width), static_cast<GLsizei>(face->glyph->bitmap.rows), GL_RED, GL_RED, face->glyph->bitmap.buffer);
 
 		characters.try_emplace(
-			glyph,
+			static_cast<char>(glyph),
 			Character(
-				texture,
+				std::move(texture),
 				glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
 				glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
 				face->glyph->advance.x
@@ -55,83 +41,8 @@ CaffeineFont::CaffeineFont(const std::filesystem::path& path) {
 
 	FT_Done_Face(face);
 	FT_Done_FreeType(freetype);
-
-	const std::vector<uint32_t> indices {0, 1, 2, 1, 2, 3};
-
-	const float vertices[4][4] = {
-		{-0.5f, -0.5f,  0.0f, 1.0f}, // Bottom left
-		{ 0.5f, -0.5f,  1.0f, 1.0f}, // Bottom right
-		{-0.5f,  0.5f,  0.0f, 0.0f}, // Top left
-		{ 0.5f,  0.5f,  1.0f, 0.0f}, // Top right
-	};
-
-	glGenVertexArrays(1, &vao);
-	glGenBuffers(1, &vbo);
-	glGenBuffers(1, &ebo);
-
-	glBindVertexArray(vao);
-
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 16, vertices, GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(uint32_t), indices.data(), GL_STATIC_DRAW);
-
-	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), nullptr);
-	glEnableVertexAttribArray(0);
-
-	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
-
-void CaffeineFont::renderText(const CaffeineTextComponent& text, CaffeineTransformComponent transform) {
-	text.shader->activate();
-	text.shader->setVector4f("textColor", text.color);
-	text.shader->setMatrix4("projectionMatrix", CaffeineRenderingSystem::projectionMatrix);
-
-	glActiveTexture(GL_TEXTURE0);
-	glBindVertexArray(vao);
-
-	for(char c : text.text) {
-		auto modelMatrix = glm::mat4(1.0f);
-		if (auto entry = characters.find(c); entry != characters.end()) {
-			auto& [textureID, size, bearing, advance] = entry->second;
-
-			const float xPos = transform.position.x + static_cast<float>(bearing.x) * transform.size.x;
-			const float yPos = transform.position.y + (static_cast<float>(size.y) - static_cast<float>(bearing.y)  / 2.0f) * transform.size.y;
-
-			const float width = static_cast<float>(size.x) * transform.size.x;
-			const float height = static_cast<float>(size.y) * transform.size.y;
-
-			modelMatrix = glm::translate(modelMatrix, glm::vec3(xPos, yPos, 0.0f));
-			modelMatrix = glm::rotate(modelMatrix, glm::radians(transform.rotation), glm::vec3(0.0f, 0.0f, 1.0f));
-			modelMatrix = glm::scale(modelMatrix, glm::vec3(width, height, 1.0f));
-
-			text.shader->setMatrix4("modelMatrix", modelMatrix);
-
-			glBindTexture(GL_TEXTURE_2D, textureID);
-			text.shader->setInteger("text", 0);
-
-			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, static_cast<void*>(nullptr));
-
-			// now advance cursors for next glyph (note that advance is number of 1/64 pixels)
-			// @TODO: add rotated text support
-			transform.position.x += static_cast<float>(advance >> 6) * transform.size.x;
-		} else {
-			// @TODO: missing glyph handling
-		}
-	}
-
-	glBindVertexArray(0);
-	glBindTexture(GL_TEXTURE_2D, 0);
-}
-
 
 CaffeineFont::~CaffeineFont() {
 	characters.clear();
-
-	glDeleteVertexArrays(1, &vao);
-	glDeleteBuffers(1, &vbo);
-	glDeleteBuffers(1, &ebo);
 }

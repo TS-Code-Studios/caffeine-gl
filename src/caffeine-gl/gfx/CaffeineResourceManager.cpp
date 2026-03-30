@@ -100,7 +100,7 @@ void CaffeineResourceManager::createDefaultMeshes() {
         {-0.5f,  0.5f, 0,1, 1,1,1,1}, // Top left
         { 0.5f,  0.5f, 1,1, 1,1,1,1}	// Top right
     };
-    const std::vector<uint32_t> quadIndices = {0,1,2, 2,3,1};
+    const std::vector<uint32_t> quadIndices = {0,1,2, 1,2,3};
 
     loadMesh(quadVertices, quadIndices, "quad");
 }

@@ -1,5 +1,5 @@
-#ifndef RESOURCEMANAGER_H
-#define RESOURCEMANAGER_H
+#ifndef CAFFEINERESOURCEMANAGER_H
+#define CAFFEINERESOURCEMANAGER_H
 
 #include <filesystem>
 #include <map>
@@ -58,4 +58,4 @@ private:
 	static CaffeineTexture loadTextureFromFile(const char *path);
 };
 
-#endif //RESOURCEMANAGER_H
+#endif //CAFFEINERESOURCEMANAGER_H

@@ -1,5 +1,5 @@
-#ifndef TEXTURE_H
-#define TEXTURE_H
+#ifndef CAFFEINETEXTURE_H
+#define CAFFEINETEXTURE_H
 
 #include <glad/glad.h>
 
@@ -33,4 +33,4 @@ public:
 	static void unbind();
 };
 
-#endif //TEXTURE_H
+#endif //CAFFEINETEXTURE_H
