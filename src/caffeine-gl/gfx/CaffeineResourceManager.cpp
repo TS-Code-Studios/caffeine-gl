@@ -84,6 +84,7 @@ CaffeineShader& CaffeineResourceManager::getShader(const std::string& name) {
 
 // Texture management functions
 CaffeineTexture& CaffeineResourceManager::loadTexture(const char *path, const std::string& name) {
+    std::cout << "loading texture: " << name << std::endl;
     textures.emplace(name, loadTextureFromFile(path));
     return textures.at(name);
 }
@@ -174,37 +175,40 @@ std::string CaffeineResourceManager::loadShaderCodeFromFile(const std::filesyste
 
 
 CaffeineTexture CaffeineResourceManager::loadTextureFromFile(const char *path) {
-    std::string resolvedPath = resolveResourcePath(path).string();
+    CaffeineTexture output;
 
-    CaffeineTexture texture;
+    std::string resolvedPath = resolveResourcePath(path).string();
 
     int width, height, nrChannels;
     stbi_set_flip_vertically_on_load(true);
     unsigned char* data = stbi_load(resolvedPath.c_str(), &width, &height, &nrChannels, 0);
 
-
     if(data == nullptr) {
         std::cerr << "Failed to load texture: " << resolvedPath << ", falling back to placeholder" << std::endl;
 
         resolvedPath = resolveResourcePath("textures/missing_texture.png").string();
-        texture.format_INTERNAL = GL_RGB;
-        texture.format_IMAGE = GL_RGB;
 
         data = stbi_load(resolvedPath.c_str(), &width, &height, &nrChannels, 0);
     }
 
-    texture.filter_MAX = GL_NEAREST;
-    if(nrChannels == 4) {
-        texture.format_IMAGE = GL_RGBA;
-        texture.format_INTERNAL = GL_RGBA;
-    } else if(nrChannels == 3) {
-        texture.format_IMAGE = GL_RGB;
-        texture.format_INTERNAL = GL_RGB;
+
+    switch(nrChannels) {
+        case 4:
+            output.generate(width, height, GL_RGBA, GL_RGBA, data);
+            break;
+
+        case 3:
+            output.generate(width, height, GL_RGB, GL_RGB, data);
+            break;
+
+        case 2:
+            output.generate(width, height, GL_RG, GL_RG, data);
+            break;
+
+        default:
+            output.generate(width, height, GL_RED, GL_RED, data);
     }
 
-    texture.generate(width, height, data);
-
-
     stbi_image_free(data);
-    return texture;
+    return output;
 }

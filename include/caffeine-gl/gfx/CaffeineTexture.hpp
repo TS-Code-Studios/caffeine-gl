@@ -7,12 +7,6 @@ class CaffeineTexture {
 public:
 	unsigned int ID{};
 
-	GLsizei width, height;
-	GLint format_INTERNAL, format_IMAGE;
-
-	GLint wrap_S, wrap_T;
-	GLint filter_MIN, filter_MAX;
-
 	CaffeineTexture();
 	~CaffeineTexture();
 	CaffeineTexture(const CaffeineTexture&) = delete;
@@ -32,8 +26,11 @@ public:
 		return *this;
 	}
 
-	void generate(unsigned int width, unsigned int height, const unsigned char* data);
+	void generate(GLsizei width, GLsizei height, GLint internalFormat, GLint imageFormat, const unsigned char* data) const;
+	void setTextureParameter(GLenum parameter, GLint value) const;
+
 	void bind() const;
+	static void unbind();
 };
 
 #endif //TEXTURE_H
