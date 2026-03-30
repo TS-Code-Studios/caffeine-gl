@@ -42,7 +42,6 @@ add_library(${PROJECT_NAME} STATIC
         include/caffeine-gl/systems/CaffeineCollisionSystem.hpp
         src/caffeine-gl/systems/CaffeineCollisionSystem.cpp
         include/caffeine-gl/components/CaffeineColliderComponent.hpp
-        src/caffeine-gl/gfx/TextRenderer.cpp
         include/caffeine-gl/game/CaffeineWorld.hpp
         src/caffeine-gl/game/CaffeineWorld.cpp
         include/caffeine-gl/game/CaffeineComponentPoolInterface.hpp
