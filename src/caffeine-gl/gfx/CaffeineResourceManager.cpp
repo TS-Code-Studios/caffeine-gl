@@ -84,7 +84,6 @@ CaffeineShader& CaffeineResourceManager::getShader(const std::string& name) {
 
 // Texture management functions
 CaffeineTexture& CaffeineResourceManager::loadTexture(const char *path, const std::string& name) {
-    std::cout << "loading texture: " << name << std::endl;
     textures.emplace(name, loadTextureFromFile(path));
     return textures.at(name);
 }
